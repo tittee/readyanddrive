@@ -3,3 +3,18 @@
 # Example .gitignore files: https://github.com/github/gitignore
 /bower_components/
 /node_modules/
+/admin/
+/cgi-bin/
+/configuration.php
+/css/
+/demo/
+/font/
+/globals.php
+/images/
+/includes/
+/login_backoffice.php
+/readyanddrive_2.sql
+/readyanddrive/
+/modules/
+/logout.php
+/js/
