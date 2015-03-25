@@ -1,0 +1,27 @@
+/* Responsive CSS by หนึ่ง กุ๊กกู๋ */
+
+@charset "utf-8";
+/*=Global
+-------------------------------------------------------------- */
+
+@media (max-width: 320px) {
+	body {
+		background: #CCCCCC;
+	}
+}
+
+@media (min-width: 768px) and (max-width: 979px) {
+}
+
+@media (max-width: 320px) {
+}
+
+@media (max-width: 480px) {
+}
+
+@media (max-width: 1136px) {
+}
+
+@media print {
+}
+

@@ -1,0 +1,16 @@
+/* CSS by หนึ่ง กุ๊กกู๋ */
+
+@charset "utf-8";
+/*=Global
+-------------------------------------------------------------- */
+#warning-browser { background: url(bg.png) repeat 0 0; position: fixed; left: 0; top: 0; right: 0; bottom: 0; z-index: 9999; }
+#wb-container { color: #FFFFFF; height: 200px; width: 800px; margin: 150px auto 0 auto; }
+#wb-container p { font-size: 18px; text-align: center; padding: 0; margin: 0; line-height: 34px; }
+#wb-container #wb-title { font-size: 24px; text-decoration: underline; }
+#wb-container ul { float: left; margin: 0 0 0 245px; padding: 0; }
+#wb-container ul li { float: left; list-style-type: none; margin: 0 10px 0 0; padding: 0; }
+#wb-container .wb-icon { display: block; width: 64px; height: 64px; text-indent: -9999px; }
+#wb-ie { background: url(ie.png) no-repeat 0 0; }
+#wb-firefox { background: url(firefox.png) no-repeat 0 0; }
+#wb-chrome { background: url(chrome.png) no-repeat 0 0; }
+#wb-safari { background: url(safari.png) no-repeat 0 0; }

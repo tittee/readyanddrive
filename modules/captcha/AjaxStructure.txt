@@ -1,0 +1,5 @@
+
+
+index.php	<---- Gen Image :: CaptchaSecurityImages.php
+			<---- Response :: captcheckajax.js
+			-----> Request :: captcheck.php

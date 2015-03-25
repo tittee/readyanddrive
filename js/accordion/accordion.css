@@ -1,0 +1,145 @@
+/* Icon font for arrow icons */
+
+/* Accordion style */
+.cbp-ntaccordion {
+	list-style: none;
+	margin: 20px 0 40px;
+	padding: 0;
+
+}
+
+.cbp-ntsubaccordion {
+	list-style: none;
+    /* -moz-border-radius:     4px;
+    -webkit-border-radius:  4px;
+    -khtml-border-radius:   4px;
+    border-radius:          4px; */
+}
+
+.cbp-ntaccordion .cbp-nttrigger {
+	cursor: pointer;
+}
+
+.cbp-ntaccordion h3 {
+	margin: 0;
+	padding: 1em 0 0.5em;
+    border-bottom: 2px solid #6f7071;
+	font-size: 14px;
+	font-weight: 300;
+    text-align: center;
+    color: #3b3b3b;
+    background-color: #d9d9d9;
+    -webkit-border-top-left-radius: 4px;
+    -webkit-border-top-right-radius: 4px;
+    -moz-border-radius-topleft: 4px;
+    -moz-border-radius-topright: 4px;
+    border-top-left-radius: 4px;
+    border-top-right-radius: 4px;
+}
+
+.cbp-ntaccordion h4 {
+	font-size: 1.2em;
+	text-transform: uppercase;
+	letter-spacing: 0.4em;
+	padding: 0.5em 0 0.5em;
+	margin: 0 0 0.5em;
+}
+
+.cbp-ntaccordion h5 {
+	font-size: 1.2em;
+	color: #aaa;
+	padding: 0.5em 0 0.5em;
+	margin: 0 0 0.5em;
+}
+
+.cbp-ntaccordion .cbp-ntcontent p {
+    text-align: left;
+	color: #888;
+	font-size: 1.25em;
+	font-weight: 300;
+	line-height: 1.5;
+	padding: 1.25em;
+	margin: 0;
+    background-color: #f4f4f4;
+    border-bottom: 2px solid #203b66;
+}
+
+.cbp-ntaccordion > li {
+    text-align: center;
+}
+
+@font-face {
+    font-family: 'Glyphicons Halflings';
+
+    src: url('../../bootstrap-3.2.0/fonts/glyphicons-halflings-regular.eot');
+    src: url('../../bootstrap-3.2.0/fonts/glyphicons-halflings-regular.eot?#iefix') format('embedded-opentype'), url('../../bootstrap-3.2.0/fonts/glyphicons-halflings-regular.woff') format('woff'), url('../../bootstrap-3.2.0/fonts/glyphicons-halflings-regular.ttf') format('truetype'), url('../../bootstrap-3.2.0/fonts/glyphicons-halflings-regular.svg#glyphicons_halflingsregular') format('svg');
+}
+
+/* Arrow icons */
+.cbp-ntaccordion > li > .cbp-nttrigger:after,
+.cbp-ntsubaccordion > li > .cbp-nttrigger:after {
+    position: relative;
+    top: 1px;
+    display: inline-block;
+    font-family: 'Glyphicons Halflings';
+    font-style: normal;
+    font-weight: normal;
+    line-height: 1;
+
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
+.cbp-ntaccordion > li > .cbp-nttrigger:after {
+	font-size: 75%;
+}
+
+
+.cbp-ntaccordion > li > .cbp-nttrigger:after {
+    content: "\e113";
+}
+
+.cbp-ntaccordion > li > .cbp-nttrigger:hover:after {
+    content: "\e114";
+	color: inherit;
+}
+.cbp-ntaccordion > li.cbp-ntopen > .cbp-nttrigger:after,
+.no-js .cbp-ntaccordion > li > .cbp-nttrigger:after {
+    content: "\e113";
+	color: inherit;
+}
+
+.cbp-ntsubaccordion > li > .cbp-nttrigger:after {
+	content: "\32";
+}
+.cbp-ntsubaccordion > li > .cbp-nttrigger:hover:after {
+	content: "\33";
+	color: inherit;
+}
+.cbp-ntsubaccordion > li.cbp-ntopen > .cbp-nttrigger:after,
+.no-js .cbp-ntsubaccordion > li > .cbp-nttrigger:after {
+	content: "\31";
+	color: inherit;
+}
+
+/* Initial height is zero */
+.cbp-ntaccordion .cbp-ntcontent {
+	height: 0;
+	overflow: hidden;
+}
+
+/* When open, set height to auto */
+.cbp-ntaccordion .cbp-ntopen > .cbp-ntcontent,
+.cbp-ntsubaccordion .cbp-ntopen > .cbp-ntcontent,
+.no-js .cbp-ntaccordion .cbp-ntcontent {
+	height: auto;
+}
+
+/* Example for media query */
+@media screen and (max-width: 32em) {
+
+	.cbp-ntaccordion {
+		font-size: 70%;
+	}
+
+}

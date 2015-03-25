@@ -1,0 +1,7 @@
+[28-Aug-2014 22:50:43 America/Chicago] PHP Fatal error:  Call-time pass-by-reference has been removed in /home/thaimobi/public_html/includes/func.class.php on line 206
+[28-Aug-2014 23:18:15 America/Chicago] PHP Fatal error:  Call-time pass-by-reference has been removed in /home/thaimobi/public_html/includes/func.class.php on line 206
+[29-Aug-2014 02:11:35 America/Chicago] PHP Fatal error:  Call-time pass-by-reference has been removed in /home/thaimobi/public_html/includes/func.class.php on line 206
+[29-Aug-2014 02:14:54 America/Chicago] PHP Fatal error:  Call to undefined function session_unregister() in /home/thaimobi/public_html/admin/_execlogout.php on line 4
+[29-Aug-2014 02:14:55 America/Chicago] PHP Fatal error:  Call to undefined function session_unregister() in /home/thaimobi/public_html/admin/_execlogout.php on line 4
+[29-Aug-2014 02:16:09 America/Chicago] PHP Fatal error:  Call to undefined function session_unregister() in /home/thaimobi/public_html/admin/_execlogout.php on line 4
+[29-Aug-2014 02:17:45 America/Chicago] PHP Fatal error:  Call to undefined function session_is_registered() in /home/thaimobi/public_html/admin/_execlogout.php on line 10
