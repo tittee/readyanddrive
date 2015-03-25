@@ -1,5 +1,14 @@
+<<<<<<< HEAD
 # https://git-scm.com/docs/gitignore
 # https://help.github.com/articles/ignoring-files
 # Example .gitignore files: https://github.com/github/gitignore
 /bower_components/
 /node_modules/
+=======
+echo "# readyanddrive" >> README.md
+git init
+git add README.md
+git commit -m "first commit"
+git remote add origin https://github.com/tittee/readyanddrive.git
+git push -u origin master
+>>>>>>> readyanddrive/master
