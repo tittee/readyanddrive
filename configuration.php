@@ -10,7 +10,7 @@ $_Config_root = 'http://localhost:8080/readyanddrive';
 
 $_Config_sitename = 'Ready And Drive'; //'จำหน่ายสินค้าเกาหลี รองเท้าผ้าใบส้นสูง รองเท้าแฟชั่น ชุดทำงาน รองเท้าผ้าใบผู้หญิง เสื้อทำงาน';
 $_Config_description = '';
-$_Config_ keyword = '';
+$_Config_keyword = '';
 
 $_Config_live_site_email = "readyanddrive.com";
 
