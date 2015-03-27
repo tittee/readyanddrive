@@ -1,4 +1,6 @@
 <?php
+// Report all errors except E_NOTICE
+//error_reporting(E_ALL & ~E_NOTICE);
 	ob_start("ob_gzhandler"); //เรียกทุกหน้าแล้วตรงนี้เลยปิด
 	header("Content-Encoding: gzip");
 	header('Content-type: text/html; charset=utf-8');//Header to tell browser what kind of file it is.
@@ -25,51 +27,101 @@
 	$DB = mosConnectADODB();
 	$msObj = new MS($DB);
 
+$FU = new FU();
 	$errCode= "0";
 	$flagSuccess = "0";
 
 	$action = trim(mosGetParam( $_FORM, 'action', ''));
 	$id = trim(mosGetParam( $_FORM, 'id', ''));
-
-	if( isset($action) && !empty($action) && $action == "แก้ไข | Edit" && eregi($_SERVER['HTTP_HOST'],$_SERVER['HTTP_REFERER']) ){
-
-        $member_fname = trim(mosGetParam($_FORM,'member_fname'));
-        $member_lname = trim(mosGetParam($_FORM,'member_lname',''));
-        $password = trim(mosGetParam($_FORM,'password',''));
-        $member_email = trim(mosGetParam($_FORM,'member_email',''));
-        $member_gender = trim(mosGetParam($_FORM,'member_gender',''));
-        $member_province = trim(mosGetParam($_FORM,'member_province',''));
-        $member_mobileno = trim(mosGetParam($_FORM,'member_mobileno',''));
-        $member_backlist = trim(mosGetParam($_FORM,'member_backlist',''));
-
-        $qry_check = "select * from $_Config_table[member]  where member_id = '$id' ";
-        $rs_check = $DB->Execute($qry_check);
-        $row_check = $rs_check->FetchRow();
+    #=======================================================#
+    $store_name = trim(mosGetParam($_FORM,'store_name'));
+    $store_bill = trim(mosGetParam($_FORM,'store_bill',''));
+    $store_bill_description = trim(mosGetParam($_FORM,'store_bill_description',''));
 
 
+if( isset($action) && !empty($action) && $action == "บันทึก | Save"  ){
 
-        $qryUpdate = "update  $_Config_table[member] set
-            member_fname = $DB->qstr('$member_fname'),
-            member_lname = $DB->qstr('$member_lname'),
-            member_email = $DB->qstr('$member_email'),
-            member_gender = $DB->qstr('$member_gender'),
-            member_province = $DB->qstr('$member_province'),
-            zipcode = $DB->qstr('$zipcode'),
-            member_mobileno = $DB->qstr('$member_mobileno'),
-            member_create_date = now(),
-            member_update_date = now(),
-            member_backlist = $DB->qstr('$member_backlist') ";
-            if( $chk_password == "on" ){
-                $qryUpdate.= ", password  = $DB->qstr('$password') ";
+
+        #=======================================================#
+        $sServerDir = $_Config_absolute_path."/uploads/store/";
+
+        $sType = "Image";
+        $SetMaxSize = '1048576';	// 1MB
+
+        #Image Allowed & Denied
+        $_Config['AllowedExtensions'][$sType] = array('jpg', 'jpeg', 'gif', 'png') ;
+        $_Config['DeniedExtensions'][$sType] = array('zip', 'pdf', 'php','php3','php5','phtml','asp','aspx','ascx','jsp','cfm','cfc','pl','bat','exe','dll','reg','cgi') ;
+        #=======================================================#
+
+    $upload1 = $FU->uploadNewImage( $_FILES['file1'], $sServerDir, $_Config['AllowedExtensions'][$sType], $_Config['DeniedExtensions'][$sType], $SetMaxSize, 600);
+
+        if($upload1["Flag"] == "1" ){//Error
+            $errCode = "A100"; //Upload Failed
+            $errMsg = $upload1["Msg"];
+            $flagSuccess = "0";
+        }else{
+
+            #Get Last Order
+            $qryGetOrder = "select store_order from $_Config_table[store] order by store_order desc limit 0, 1";
+            $rsGetOrder = $DB->Execute($qryGetOrder);
+            $getOrder = $rsGetOrder->FetchRow();
+            $setOrder = $getOrder["store_order"] + 1;
+
+            $qryInsPD = "INSERT INTO $_Config_table[store]
+				(store_name,
+                store_primary_img,
+                store_bill,
+                store_bill_description,
+                createdate,
+                updatedate,
+                store_order)
+			VALUES(
+				$DB->qstr('$store_name'),
+				'$upload1[sFileName]',
+				$DB->qstr('$store_bill'),
+				$DB->qstr('$store_bill_description'),
+				now(), now(),
+				$setOrder
+			)";
+            $qryInsPD2 = "INSERT INTO $_Config_table[store]
+				(store_name,
+                store_primary_img,
+                store_bill,
+                store_bill_description,
+                createdate,
+                updatedate,
+                store_order)
+			VALUES(
+				$DB->qstr('$store_name'),
+				'$upload1[sFileName]',
+				$DB->qstr('$store_bill'),
+				$DB->qstr('$store_bill_description'),
+				now(), now(),
+				$setOrder
+			)";
+            //echo $qryInsPD;
+            //$DB->Execute($qryInsPD);
+
+            /* Transection */
+            /* อันนี้ */
+            $acceptTran = $DB->Execute($qryInsPD);  //ไม่ต้อง insert เพราะเราทำเงื่อนไข ขึั้นต่อไป
+            $ProductID = $DB->Insert_ID();
+            //if ($acceptTran) $acceptTran = $DB->Execute($qryInsPD);
+            if (!$acceptTran) {
+                $DB->RollbackTrans();
+                echo "Error Save [".$qryInsPD."]";
+            } else{
+                $flagCommit1 = $DB->CommitTrans();
             }
-			$qryUpdate.=" where member_id='$id' ";
 
-			$DB->Execute($qryUpdate);
-			$flagSuccess = "1";
-            //echo $qryUpdate;
+            $flagSuccess1 = $flagCommit1; //เปลี่ยนเป็น $flagCommit
 
-            mosRedirect( "index.php" );
-		}
+            if( $flagSuccess1 == "1" ){
+                mosRedirect("index.php");
+            }
+        }
+        //mosRedirect( "index.php" );
+    }
 
 
 
@@ -91,73 +143,41 @@
 <?php include "../inc/headTag.tmpl.php";?>
 <div id="SideMenu"><?php include "../inc/leftmenu.php";?></div>
 <div id="Content">
-	<h2>แก้ไขสมาชิก</h2>
+	<h2>เพิ่มร้านค้า</h2>
 <div class="updated" id="Show-result"><p><span class="headSm">เกิดข้อผิดพลาด : </span><span class="date"><?php echo "รูปประกอบขนาดเล็ก : ".$errMsg; if($errMsg !="" && $errMsg2 !="" ){ echo ", "; } echo "รูปประกอบขนาดใหญ่ : ".$errMsg2;?></span></p></div>
     <form action="" method="post" enctype="multipart/form-data" name="FromEdit">
     <table class="form-table">
             <tbody>
-             <!--<tr class="form-field form-required">
-              <th align="left" valign="top" scope="row"><label for="title">ชื่อการใช้งาน</label></th>
-                <td align="left" valign="top" class="idata"><?php echo $row["username"]; ?></td>
-            </tr>-->
-            <!--<tr class="form-field">
-                <th align="left" valign="top" scope="row">รหัสผ่าน</th>
-                <td align="left" valign="top" class="idata">
-                <input name="password" type="password" id="password_member" size="15" maxlength="15" value="<?=$row["password"]?>"  />
-                <input name="chk_password" type="checkbox" id="chk_password" value="on" />
-                เปลี่ยนรหัสผ่าน<br />
-                <span class="description">ถ้าต้องการเปลี่ยนแปลงรหัสผ่านให้เลือกที่ เปลี่ยนแปลงรหัสผ่าน และใส่รหัสผ่านใหม่ที่ท่านต้องการ</span></td>
-              </tr>-->
+
 
               <tr class="form-field">
-                <th align="left" valign="top" scope="row">ชื่อ</th>
-                <td align="left" valign="top" class="idata"><input name="member_fname" type="text"  id="member_fname" size="60" value="<?php echo clearText($row["member_fname"]); ?>" /></td>
+                <th align="left" valign="top" scope="row">ชื่อร้าน</th>
+                  <td align="left" valign="top" class="idata"><input name="store_name" type="text"  id="store_name" size="60" value="<?php echo $store_name; ?>" /></td>
               </tr>
-              <tr class="form-field">
-                <th align="left" valign="top" scope="row">นามสกุล</th>
-                <td align="left" valign="top" class="idata"><input name="member_lname" type="text"  id="member_lname" size="60" value="<?php echo clearText($row["member_lname"]); ?>" /></td>
-              </tr>
-
-              <tr class="form-field">
-                <th align="left" valign="top" scope="row">เพศ</th>
-                <td align="left" valign="top" class="idata">
-                <input type='radio' name='member_gender' id="member_gender" value='0' <? if ($row["member_gender"] == '0'){ echo "checked='checked'";}?> /> ชาย (Male)
-                <input type='radio' name='member_gender' id="member_gender" value='1' <? if ($row["member_gender"] == '1'){ echo "checked='checked'";}?> /> หญิง (Female)</td>
-              </tr>
-
                 <tr class="form-field">
-                    <th align="left" valign="top" scope="row">อีเมล์</th>
-                    <td align="left" valign="top" class="idata"><input name="member_email" type="text" id="member_email" size="60" value="<?php echo clearText($row["member_email"]); ?>" /></td>
-                </tr>
-                <tr class="form-field">
-                    <th align="left" valign="top" scope="row">โทรศัพท์</th>
-                    <td align="left" valign="top" class="idata"><input name="member_mobileno" type="text" id="member_mobileno" size="9" maxlength="20" value="<?=$row["member_mobileno"]?>" /></td>
+                    <th align="left" valign="top" scope="row">รูปประกอบขนาดเล็ก</th>
+                    <td align="left" class="idata"><input type="file" name="file1" id="file1" /><br />
+                        <span class="description">ขนาดความกว้างไม่เกิน 600px พิกเซล ขนาดไฟล์ไม่เกิน 1 MB. (อนุญาติเฉพาะไฟล์ .gif .jpg .jpeg .png เท่านั้น)</span></td>
                 </tr>
               <tr class="form-field">
-                <th align="left" valign="top" scope="row">จังหวัด</th>
-                <td align="left" valign="top" class="idata">
-                <select  id="member_province" name="member_province">
-        		<option value="" selected="selected">--เลือก/select--</option>
-                    <?php $msObj->selectOptionNoTag($_Config_table["province"], "province_id", "province_name", $row["member_province"]);?>
-                </select></td>
+                <th align="left" valign="top" scope="row">จำนวนรหัสใบเสร็จ</th>
+                  <td align="left" valign="top" class="idata"><input name="store_bill" type="text"  id="store_bill" size="60" value="<?php echo $store_bill; ?>" /></td>
               </tr>
-
 
               <tr class="form-field">
-                <th align="left" valign="top" scope="row">บัญชีอันตราย</th>
+                <th align="left" valign="top" scope="row">รายละเอียดใบเสร็จ</th>
                 <td align="left" valign="top" class="idata">
-                    <input name="member_backlist" type="radio" id="member_backlist" value="1" <?php echo ($row["member_backlist"]=="1")? "checked" : ""; ?> />
-                ใช่ / Yes <br />
-                    <input type="radio" name="member_backlist" id="member_backlist" value="0" <?php echo ($row["member_backlist"]=="0")? "checked" : ""; ?> />
-                ไม่/ No </td>
+                    <textarea style="width: 97%;" cols="50" rows="5" id="store_bill_description" name="store_bill_description"><?php echo $store_bill_description; ?></textarea>
+                </td>
               </tr>
+
 
           </tbody>
     </table>
     <p class="submit">
     <input type="hidden" name="oldThumb" value="<?php echo $row["avatar"];?>" />
     <input type="hidden" name="id" value="<?php echo $id;?>" />
-    <input type="submit" value="แก้ไข | Edit" name="action" class="button-primary">
+        <input type="submit" value="บันทึก | Save" name="action" class="button-primary">
     <input type="button" name="action2" value="ยกเลิก | Cancel" class="button-primary" onclick="MM_goToURL('parent','index.php');return document.MM_returnValue" /></p>
     </form>
 </div>

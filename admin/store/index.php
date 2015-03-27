@@ -24,13 +24,13 @@
 	#Create Obj
 	$DB = mosConnectADODB();
 	$msObj = new MS($DB);
-
+$DT = new DT();
 	$errCode="0";
 
 	$action = trim(mosGetParam( $_FORM, 'action', '' ));
 	$action_up = trim(mosGetParam( $_FORM, 'action_up', '' ));
 	$keyword = trim(mosGetParam( $_FORM, 'keyword', '' ));
-    $member_confirm = trim(mosGetParam( $_FORM, 'member_confirm', '' ));
+    $store_confirm = trim(mosGetParam( $_FORM, 'store_confirm', '' ));
 	$id = mosGetParam( $_FORM, 'id', '' );
 
 	if ($action_up !==""){
@@ -43,18 +43,18 @@
 			case "Delete" :
 				$num = count($id);
 				if ($num >= "1" && $id !="" ){
-					$absPath=$_Config_absolute_path."/uploads/member/";
+					$absPath=$_Config_absolute_path."/uploads/store/";
 
 					for( $i = 0; $i < $num; $i++){
 
 						//Del pic in post
-						$qrySel = "select * from $_Config_table[member] Where member_id = '$id[$i]' ";
+						$qrySel = "select * from $_Config_table[store] Where store_id = '$id[$i]' ";
 						$rsSel = $DB->Execute($qrySel);
 
 						if ($rsSel->RecordCount() > 0){
 							$data = $rsSel->FetchRow();
 							$pic = $data["avatar"];
-							$qryDel = "delete from $_Config_table[member] where member_id = '$data[member_id]' ";
+							$qryDel = "delete from $_Config_table[store] where store_id = '$data[store_id]' ";
 							$DB->Execute($qryDel);
 							if( $DB->Affected_Rows()){
 								@FU::unlinkImage($absPath, $pic);
@@ -72,16 +72,16 @@
 			case "DeleteItem" :
 
 				if ($id !="" ){
-					$absPath=$_Config_absolute_path."/uploads/member/";
+					$absPath=$_Config_absolute_path."/uploads/store/";
 
 					//Del pic in post
-					$qrySel = "select * from $_Config_table[member] Where member_id = '$id' ";
+					$qrySel = "select * from $_Config_table[store] Where store_id = '$id' ";
 					$rsSel = $DB->Execute($qrySel);
 
 					if($rsSel->RecordCount() > 0){
 						$data = $rsSel->FetchRow();
 						$pic = $data["avatar"];
-						$qryDel = "delete from $_Config_table[member] where member_id = '$data[member_id]' ";
+						$qryDel = "delete from $_Config_table[store] where store_id = '$data[store_id]' ";
 						$DB->Execute($qryDel);
 						if( $DB->Affected_Rows()){
 							@FU::unlinkImage($absPath, $pic);
@@ -125,7 +125,7 @@
 <div id="Content">
 <form action="" method="post" id="FormContent" name="FormContent">
     <div class="header">
-        <div class="alignleft_header"><h2>สมาชิก <input name="action2" type="button" class="button-primary" onclick="MM_goToURL('parent','add.php');return document.MM_returnValue" value="เพิ่ม | Add New" /></h2></div>
+        <div class="alignleft_header"><h2>ร้านค้า <input name="action2" type="button" class="button-primary" onclick="MM_goToURL('parent','add.php');return document.MM_returnValue" value="เพิ่ม | Add New" /></h2></div>
         <div class="alignright_header"><input type="text" name="keyword" id="keyword" /> <input type="submit" class="button-primary" id="doaction" name="doaction" value="Search">
    	  </div>
     </div>
@@ -150,8 +150,7 @@
         <thead>
         <tr>
         <th width="2%" align="center"><input type="checkbox" name="checkAllAuto" id="checkAllAuto_Top"/></th>
-        <th align="left">ชื่อ-นามสกุล</th>
-            <th width="15%" align="left">จังหวัด</th>
+        <th align="left">ชื่อร้านค้า</th>
         <th width="13%" align="left">วันที่</th>
         </tr>
         </thead>
@@ -159,8 +158,7 @@
         <tfoot>
         <tr>
         <th align="center"><input type="checkbox" name="checkAllAuto" id="checkAllAuto_Bottom"/></th>
-            <th align="left">ชื่อ-นามสกุล</th>
-            <th align="left">จังหวัด</th>
+            <th align="left">ชื่อร้านค้า</th>
         <th align="left">วันที่</th>
         </tr>
         </tfoot>
@@ -168,34 +166,33 @@
         <tbody>
         <?php
 		$Start_where = "0";
-		$qrySel1 = "select * from $_Config_table[member] as m";
+		$qrySel1 = "select * from $_Config_table[store] as m";
 
 
         if( $keyword != '' ){
-            $qrySel1 .= " where m.member_fname like '%$keyword%' or m.member_lname like '%$keyword%' or m.member_mobileno like '%$keyword%' or m.member_email like '%$keyword%' ";
+            $qrySel1 .= " where m.store_name like '%$keyword%' or m.store_bill_description like '%$keyword%'  ";
 		}
 
 		//echo $qrySel1;
 		$rsSel1 = $DB->Execute($qrySel1);
 		$numrows = $rsSel1->RecordCount();
-		$qrySel2 = $qrySel1 . " order by m.member_id desc" ;
+		$qrySel2 = $qrySel1 . " order by m.store_order desc" ;
 		$rsSel2 = $DB->SelectLimit($qrySel2, $limit, $start);
 		while($row = $rsSel2->FetchRow()){
 		?>
-        <tr valign="top" id="<?php echo $row["member_id"];?>">
-       	  	<td align="center" style="height: 60px;"><input type="checkbox" name="id[]" value="<?php echo $row["member_id"];?>"></td>
-       	  	<td align="left" valign="top" class="row-title" id="<?php echo $row["member_id"];?>">
-                <strong><a title="Edit this item" href="edit.php?id=<?php echo $row["member_id"];?>"><?php echo $row["member_fname"] .' '. $row["member_fname"]; ?></a></strong>
-            <div class="row-actions" id="row-actions-<?php echo $row["member_id"];?>">
-          	<span class="edit"><a title="Edit this item" href="edit.php?id=<?php echo $row["member_id"];?>">Edit</a> | </span>
-          	<span class="view"><a rel="permalink" title="View this item" href="view.php?id=<?php echo $row["member_id"];?>">View</a> | </span>
-          	<span class="delete"><a href="?action=DeleteItem&id=<?php echo $row["member_id"];?>&filter=<?php echo $filter;?>&keyword=<?php echo $keyword;?>" title="Delete this item" class="submitdelete">Delete</a></span>
+        <tr valign="top" id="<?php echo $row["store_id"];?>">
+       	  	<td align="center" style="height: 60px;"><input type="checkbox" name="id[]" value="<?php echo $row["store_id"];?>"></td>
+       	  	<td align="left" valign="top" class="row-title" id="<?php echo $row["store_id"];?>">
+                <strong><a title="Edit this item" href="edit.php?id=<?php echo $row["store_id"];?>"><?php echo $row["store_name"]; ?></a></strong>
+            <div class="row-actions" id="row-actions-<?php echo $row["store_id"];?>">
+          	<span class="edit"><a title="Edit this item" href="edit.php?id=<?php echo $row["store_id"];?>">Edit</a> | </span>
+          	<span class="view"><a rel="permalink" title="View this item" href="view.php?id=<?php echo $row["store_id"];?>">View</a> | </span>
+          	<span class="delete"><a href="?action=DeleteItem&id=<?php echo $row["store_id"];?>&filter=<?php echo $filter;?>&keyword=<?php echo $keyword;?>" title="Delete this item" class="submitdelete">Delete</a></span>
           	</div>
 		  	</td>
 
-            <td align="left" valign="top"><?php echo $msObj->getName($row["member_province"], $_Config_table["province"], "province_id", "province_name");?></td>
 
-            <td align="left" valign="top"><?php echo (DT::isDate($row["member_create_date"]))? DT::DateTimeShortFormat($row["member_create_date"], 0, 0, "Th") : "-" ;?></td>
+            <td align="left" valign="top"><?php echo ($DT->isDate($row["createdate"]))? $DT->DateTimeShortFormat($row["createdate"], 0, 0, "Th") : "-" ;?></td>
           </tr>
           <?php } ?>
         </tbody>
