@@ -70,18 +70,40 @@
 		}
 
 
-		function selectOptionBank($sel=0, $bank_sel){
+		function selectReadyColor($sel=0, $sel_value){
 			$strOption = "";
-			$selected = ( $sel == $bank_sel)? " selected" : "";
+            $selected = ( $sel == $sel_value)? " selected" : "";
 			$strOption = "<option value=\"0\"$selected>--เลือก/select--</option>\r\n";
-			$strOption .= "<option value=\"001\"$selected>ธนาคารกสิกรไทย</option>\r\n";
-			$strOption .= "<option value=\"002\"$selected>ธนาคารกรุงเทพ</option>\r\n";
-			$strOption .= "<option value=\"003\"$selected>ธนาคารกรุงไทย</option>\r\n";
-			$strOption .= "<option value=\"004\"$selected>ธนาคารไทยพาณิชย์</option>\r\n";
-			$strOption .= "<option value=\"005\"$selected>ธนาคารกรุงศรีอยุธยา</option>\r\n";
+			$strOption .= "<option value=\"001\"$selected>สีเขียว</option>\r\n";
+			$strOption .= "<option value=\"002\"$selected>สีน้ำเงิน</option>\r\n";
+			$strOption .= "<option value=\"003\"$selected>สีแดง</option>\r\n";
+			$strOption .= "<option value=\"004\"$selected>สีเหลือง</option>\r\n";
 			$strOption .= "<option value=\"006\"$selected>ธนาคารทหารไทย</option>\r\n";
 			return $strOption;
 		}
+
+        function getReadyColor($id){
+            switch($id):
+                case '1':
+                    echo 'สีเขียว';
+                    break;
+                case '2':
+                    echo 'สีน้ำเงิน';
+                    break;
+                case '3':
+                    echo 'สีแดง';
+                    break;
+                case '4':
+                    echo 'สีเหลือง';
+                    break;
+                case '5':
+                    echo 'สีม่วง';
+                    break;
+                default:
+                    echo 'ไม่ได้เลือกรสชาติ';
+            endswitch;
+        }
+
 		##============= end html selection ===================================
 
 		##============= Get function ===================================
@@ -96,6 +118,18 @@
 
 			return $result[0];
 		}
+
+
+        function getFullname($id, $tbl, $fieldid, $fieldname1, $fieldname2){
+            //$this->_db->SetFetchMode(ADODB_FETCH_NUM);
+
+            $qry = "select concat($fieldname1, ', ', $fieldname2) as fullname from $tbl where $fieldid = $id";
+            //echo $qry;
+            $rs = $this->_db->Execute($qry);
+            $result = $rs->FetchRow();
+
+            return $result[0];
+        }
 
 		function getStaffName($staffID)
 		{

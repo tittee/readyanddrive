@@ -24,13 +24,13 @@
 	#Create Obj
 	$DB = mosConnectADODB();
 	$msObj = new MS($DB);
+$DT = new DT();
 
 	$errCode="0";
 
 	$action = trim(mosGetParam( $_FORM, 'action', '' ));
 	$action_up = trim(mosGetParam( $_FORM, 'action_up', '' ));
 	$keyword = trim(mosGetParam( $_FORM, 'keyword', '' ));
-    $member_confirm = trim(mosGetParam( $_FORM, 'member_confirm', '' ));
 	$id = mosGetParam( $_FORM, 'id', '' );
 
 	if ($action_up !==""){
@@ -43,18 +43,18 @@
 			case "Delete" :
 				$num = count($id);
 				if ($num >= "1" && $id !="" ){
-					$absPath=$_Config_absolute_path."/uploads/member/";
+					$absPath=$_Config_absolute_path."/uploads/playgame/";
 
 					for( $i = 0; $i < $num; $i++){
 
 						//Del pic in post
-						$qrySel = "select * from $_Config_table[member] Where member_id = '$id[$i]' ";
+						$qrySel = "select * from $_Config_table[playgame] Where play_id = '$id[$i]' ";
 						$rsSel = $DB->Execute($qrySel);
 
 						if ($rsSel->RecordCount() > 0){
 							$data = $rsSel->FetchRow();
 							$pic = $data["avatar"];
-							$qryDel = "delete from $_Config_table[member] where member_id = '$data[member_id]' ";
+							$qryDel = "delete from $_Config_table[playgame] where play_id = '$data[play_id]' ";
 							$DB->Execute($qryDel);
 							if( $DB->Affected_Rows()){
 								@FU::unlinkImage($absPath, $pic);
@@ -72,16 +72,16 @@
 			case "DeleteItem" :
 
 				if ($id !="" ){
-					$absPath=$_Config_absolute_path."/uploads/member/";
+					$absPath=$_Config_absolute_path."/uploads/playgame/";
 
 					//Del pic in post
-					$qrySel = "select * from $_Config_table[member] Where member_id = '$id' ";
+					$qrySel = "select * from $_Config_table[playgame] Where play_id = '$id' ";
 					$rsSel = $DB->Execute($qrySel);
 
 					if($rsSel->RecordCount() > 0){
 						$data = $rsSel->FetchRow();
 						$pic = $data["avatar"];
-						$qryDel = "delete from $_Config_table[member] where member_id = '$data[member_id]' ";
+						$qryDel = "delete from $_Config_table[playgame] where play_id = '$data[play_id]' ";
 						$DB->Execute($qryDel);
 						if( $DB->Affected_Rows()){
 							@FU::unlinkImage($absPath, $pic);
@@ -125,7 +125,7 @@
 <div id="Content">
 <form action="" method="post" id="FormContent" name="FormContent">
     <div class="header">
-        <div class="alignleft_header"><h2>สมาชิก</h2></div>
+        <div class="alignleft_header"><h2>การเล่นเกมส์</h2></div>
         <div class="alignright_header"><input type="text" name="keyword" id="keyword" /> <input type="submit" class="button-primary" id="doaction" name="doaction" value="Search">
    	  </div>
     </div>
@@ -149,53 +149,76 @@
     <table cellspacing="0" class="widefat post fixed">
         <thead>
         <tr>
-        <th width="2%" align="center"><input type="checkbox" name="checkAllAuto" id="checkAllAuto_Top"/></th>
-        <th align="left">ชื่อ-นามสกุล</th>
-            <th width="15%" align="left">จังหวัด</th>
-        <th width="13%" align="left">วันที่</th>
+            <th width="2%" align="center"><input type="checkbox" name="checkAllAuto" id="checkAllAuto_Top"/></th>
+            <th align="left">ชื่อ-นามสกุล</th>
+            <th width="10%" align="left">สีรสชาติ</th>
+            <th width="17%" align="left">ร้านค้า</th>
+            <th width="20%" align="left">ใบเสร็จ</th>
+            <th width="13%" align="left">วันที่</th>
         </tr>
         </thead>
 
         <tfoot>
         <tr>
-        <th align="center"><input type="checkbox" name="checkAllAuto" id="checkAllAuto_Bottom"/></th>
+            <th align="center"><input type="checkbox" name="checkAllAuto" id="checkAllAuto_Bottom"/></th>
             <th align="left">ชื่อ-นามสกุล</th>
-            <th align="left">จังหวัด</th>
-        <th align="left">วันที่</th>
+            <th align="left">สีรสชาติ</th>
+            <th align="left">ร้านค้า</th>
+            <th align="left">ใบเสร็จ</th>
+            <th align="left">วันที่</th>
         </tr>
         </tfoot>
 
         <tbody>
         <?php
 		$Start_where = "0";
-		$qrySel1 = "select * from $_Config_table[member] as m";
+		$qrySel1 = "select * from $_Config_table[playgame] as m";
 
 
         if( $keyword != '' ){
-            $qrySel1 .= " where m.member_fname like '%$keyword%' or m.member_lname like '%$keyword%' or m.member_mobileno like '%$keyword%' or m.member_email like '%$keyword%' ";
+            $qrySel1 .= " where m.playgame_fname like '%$keyword%' or m.playgame_lname like '%$keyword%' or m.playgame_mobileno like '%$keyword%' or m.playgame_email like '%$keyword%' ";
 		}
 
 		//echo $qrySel1;
 		$rsSel1 = $DB->Execute($qrySel1);
 		$numrows = $rsSel1->RecordCount();
-		$qrySel2 = $qrySel1 . " order by m.member_id desc" ;
+		$qrySel2 = $qrySel1 . " order by m.play_id desc" ;
 		$rsSel2 = $DB->SelectLimit($qrySel2, $limit, $start);
 		while($row = $rsSel2->FetchRow()){
 		?>
-        <tr valign="top" id="<?php echo $row["member_id"];?>">
-       	  	<td align="center" style="height: 60px;"><input type="checkbox" name="id[]" value="<?php echo $row["member_id"];?>"></td>
-       	  	<td align="left" valign="top" class="row-title" id="<?php echo $row["member_id"];?>">
-                <strong><a title="Edit this item" href="edit.php?id=<?php echo $row["member_id"];?>"><?php echo $row["member_fname"] .' '. $row["member_fname"]; ?></a></strong>
-            <div class="row-actions" id="row-actions-<?php echo $row["member_id"];?>">
-          	<span class="edit"><a title="Edit this item" href="edit.php?id=<?php echo $row["member_id"];?>">Edit</a> | </span>
-          	<span class="view"><a rel="permalink" title="View this item" href="view.php?id=<?php echo $row["member_id"];?>">View</a> | </span>
-          	<span class="delete"><a href="?action=DeleteItem&id=<?php echo $row["member_id"];?>&filter=<?php echo $filter;?>&keyword=<?php echo $keyword;?>" title="Delete this item" class="submitdelete">Delete</a></span>
-          	</div>
+        <tr valign="top" id="<?php echo $row["play_id"];?>">
+       	  	<td align="center" style="height: 60px;"><input type="checkbox" name="id[]" value="<?php echo $row["play_id"];?>"></td>
+
+            <!--  1. สมาชิก -->
+       	  	<td align="left" valign="top" class="row-title" id="<?php echo $row["play_id"];?>">
+                <strong><a title="Edit this item" href="../member/view.php?id=<?php echo $row["play_id"];?>">
+                    <?php echo $msObj->getFullname($row["member_id"], $_Config_table["member"], "member_id", "member_fname", "member_lname"); ?></a></strong>
+                <div class="row-actions" id="row-actions-<?php echo $row["play_id"];?>">
+                    <span class="delete"><a href="?action=DeleteItem&id=<?php echo $row["play_id"];?>&filter=<?php echo $filter;?>&keyword=<?php echo $keyword;?>" title="Delete this item" class="submitdelete">Delete</a></span>
+                </div>
 		  	</td>
 
-            <td align="left" valign="top"><?php echo $msObj->getName($row["member_province"], $_Config_table["province"], "province_id", "province_name");?></td>
+            <!--  2. สีรสชาติน้ำ -->
+            <td align="left" valign="top"><?php echo $msObj->getReadyColor($row["play_ready_color"]);?></td>
 
-            <td align="left" valign="top"><?php echo (DT::isDate($row["member_create_date"]))? DT::DateTimeShortFormat($row["member_create_date"], 0, 0, "Th") : "-" ;?></td>
+            <!--  3. ร้านค้า -->
+            <td align="left" valign="top">
+                <?php //เช็ตเงื่อนไขว่าเป็นร้านค้าไหน
+                    if($row["store_id"] != '' || $row["store_id"] != 0): //เงือนไขที่ 2 ร้านค้าที่มีในระบบ
+                        echo $msObj->getName($row["store_id"], $_Config_table["store"], "store_id", "store_name");
+                    else: //เงือนไขที่ 2 ร้านค้าที่ไม่มีในระบบที่สามารถออกใบเสร็จได้
+                        echo $row["store_other"];
+                    endif;
+                ?>
+            </td>
+
+            <!--  4. ใบเเสร็จ -->
+            <td align="left" valign="top">
+                <?php echo $row["play_bill"]; ?>
+            </td>
+
+            <!--  5. วันที่เล่นเกมส์ -->
+            <td align="left" valign="top"><?php echo ($DT->isDate($row["play_date"]))? $DT->DateTimeShortFormat($row["play_date"], 0, 0, "Th") : "-" ;?></td>
           </tr>
           <?php } ?>
         </tbody>
