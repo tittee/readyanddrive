@@ -74,14 +74,15 @@
 			$strOption = "";
             $selected = ( $sel == $sel_value)? " selected" : "";
 			$strOption = "<option value=\"0\"$selected>--เลือก/select--</option>\r\n";
-			$strOption .= "<option value=\"001\"$selected>สีเขียว</option>\r\n";
-			$strOption .= "<option value=\"002\"$selected>สีน้ำเงิน</option>\r\n";
-			$strOption .= "<option value=\"003\"$selected>สีแดง</option>\r\n";
-			$strOption .= "<option value=\"004\"$selected>สีเหลือง</option>\r\n";
-			$strOption .= "<option value=\"006\"$selected>ธนาคารทหารไทย</option>\r\n";
+			$strOption .= "<option value=\"1\"$selected>สีเขียว</option>\r\n";
+			$strOption .= "<option value=\"2\"$selected>สีน้ำเงิน</option>\r\n";
+			$strOption .= "<option value=\"3\"$selected>สีแดง</option>\r\n";
+			$strOption .= "<option value=\"4\"$selected>สีเหลือง</option>\r\n";
+			$strOption .= "<option value=\"5\"$selected>ธนาคารทหารไทย</option>\r\n";
 			return $strOption;
 		}
 
+        /* รสชาติ */
         function getReadyColor($id){
             switch($id):
                 case '1':
@@ -101,6 +102,29 @@
                     break;
                 default:
                     echo 'ไม่ได้เลือกรสชาติ';
+            endswitch;
+        }
+
+        /* เพศ */
+        function selectGender($sel=0, $sel_value){
+            $strOption = "";
+            $selected = ( $sel == $sel_value)? " selected" : "";
+            $strOption = "<option value=\"\"$selected>--เลือก/select--</option>\r\n";
+            $strOption .= "<option value=\"0\"$selected>ชาย</option>\r\n";
+            $strOption .= "<option value=\"1\"$selected>หญิง</option>\r\n";
+            return $strOption;
+        }
+
+        function getGender($id){
+            switch($id):
+                case '0':
+                    echo 'ชาย';
+                    break;
+                case '1':
+                    echo 'หญิง';
+                    break;
+                default:
+                    echo 'ไม่ได้เลือกเพศ';
             endswitch;
         }
 

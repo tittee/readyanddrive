@@ -30,7 +30,7 @@
 	$action = trim(mosGetParam( $_FORM, 'action', '' ));
 	$action_up = trim(mosGetParam( $_FORM, 'action_up', '' ));
 	$keyword = trim(mosGetParam( $_FORM, 'keyword', '' ));
-    $member_confirm = trim(mosGetParam( $_FORM, 'member_confirm', '' ));
+    $report_confirm = trim(mosGetParam( $_FORM, 'report_confirm', '' ));
 	$id = mosGetParam( $_FORM, 'id', '' );
 
 	if ($action_up !==""){
@@ -43,18 +43,18 @@
 			case "Delete" :
 				$num = count($id);
 				if ($num >= "1" && $id !="" ){
-					$absPath=$_Config_absolute_path."/uploads/member/";
+					$absPath=$_Config_absolute_path."/uploads/report/";
 
 					for( $i = 0; $i < $num; $i++){
 
 						//Del pic in post
-						$qrySel = "select * from $_Config_table[member] Where member_id = '$id[$i]' ";
+						$qrySel = "select * from $_Config_table[report] Where report_id = '$id[$i]' ";
 						$rsSel = $DB->Execute($qrySel);
 
 						if ($rsSel->RecordCount() > 0){
 							$data = $rsSel->FetchRow();
 							$pic = $data["avatar"];
-							$qryDel = "delete from $_Config_table[member] where member_id = '$data[member_id]' ";
+							$qryDel = "delete from $_Config_table[report] where report_id = '$data[report_id]' ";
 							$DB->Execute($qryDel);
 							if( $DB->Affected_Rows()){
 								@FU::unlinkImage($absPath, $pic);
@@ -72,16 +72,16 @@
 			case "DeleteItem" :
 
 				if ($id !="" ){
-					$absPath=$_Config_absolute_path."/uploads/member/";
+					$absPath=$_Config_absolute_path."/uploads/report/";
 
 					//Del pic in post
-					$qrySel = "select * from $_Config_table[member] Where member_id = '$id' ";
+					$qrySel = "select * from $_Config_table[report] Where report_id = '$id' ";
 					$rsSel = $DB->Execute($qrySel);
 
 					if($rsSel->RecordCount() > 0){
 						$data = $rsSel->FetchRow();
 						$pic = $data["avatar"];
-						$qryDel = "delete from $_Config_table[member] where member_id = '$data[member_id]' ";
+						$qryDel = "delete from $_Config_table[report] where report_id = '$data[report_id]' ";
 						$DB->Execute($qryDel);
 						if( $DB->Affected_Rows()){
 							@FU::unlinkImage($absPath, $pic);
@@ -125,8 +125,8 @@
 <div id="Content">
 <form action="" method="post" id="FormContent" name="FormContent">
     <div class="header">
-        <div class="alignleft_header"><h2>สมาชิก</h2></div>
-        <div class="alignright_header"><input type="text" name="keyword" id="keyword" /> <input type="submit" class="button-primary" id="doaction" name="doaction" value="Search">
+        <div class="alignleft_header"><h2>รายงาน </h2></div>
+        <div class="alignright_header"><input type="submit" class="button-primary" id="doaction" name="doaction" value="พิมพ์รายงาน | Print">
    	  </div>
     </div>
 
@@ -141,6 +141,12 @@
         <option value="Delete">ลบ | Delete</option>
         </select>
         <input type="submit" class="button-primary" id="doaction" name="doaction" value="ทำงาน | Apply">
+
+          <label for="rule_startdate">เริ่ม</label>
+          <input type="text" id="rule_startdate" name="rule_startdate" value="">
+          <label for="rule_enddate">สิ้นสุด</label>
+          <input type="text" id="rule_enddate" name="rule_enddate" value="">
+          <input type="submit" class="button-primary" id="doaction" name="doaction" value="ทำงาน | Apply">
 	</div>
     <div class="clear"></div>
   </div>
@@ -149,10 +155,14 @@
     <table cellspacing="0" class="widefat post fixed">
         <thead>
         <tr>
-        <th width="2%" align="center"><input type="checkbox" name="checkAllAuto" id="checkAllAuto_Top"/></th>
-        <th align="left">ชื่อ-นามสกุล</th>
-            <th width="15%" align="left">จังหวัด</th>
-        <th width="13%" align="left">วันที่</th>
+            <th width="2%" align="center"><input type="checkbox" name="checkAllAuto" id="checkAllAuto_Top"/></th>
+            <th align="left">ชื่อ-นามสกุล</th>
+            <th width="8%" align="left">เพศ</th>
+            <th width="10%" align="left">เบอร์</th>
+            <th width="10%" align="left">สีรสชาติ</th>
+            <th width="17%" align="left">ร้านค้า</th>
+            <th width="20%" align="left">ใบเสร็จ</th>
+            <th width="13%" align="left">วันที่</th>
         </tr>
         </thead>
 
@@ -160,43 +170,81 @@
         <tr>
         <th align="center"><input type="checkbox" name="checkAllAuto" id="checkAllAuto_Bottom"/></th>
             <th align="left">ชื่อ-นามสกุล</th>
-            <th align="left">จังหวัด</th>
-        <th align="left">วันที่</th>
+            <th align="left">เพศ</th>
+            <th align="left">เบอร์</th>
+            <th align="left">สีรสชาติ</th>
+            <th align="left">ร้านค้า</th>
+            <th align="left">ใบเสร็จ</th>
+            <th align="left">วันที่</th>
         </tr>
         </tfoot>
 
         <tbody>
         <?php
 		$Start_where = "0";
-		$qrySel1 = "select * from $_Config_table[member] as m";
+		$qrySel1 = "select * from $_Config_table[report] as m";
 
 
         if( $keyword != '' ){
-            $qrySel1 .= " where m.member_fname like '%$keyword%' or m.member_lname like '%$keyword%' or m.member_mobileno like '%$keyword%' or m.member_email like '%$keyword%' ";
+            $qrySel1 .= "
+                left outer join $_Config_table[playgame] as play on m.play_id = play.store_id
+                left outer join $_Config_table[store] as st on m.store_id = st.store_id
+                left outer join $_Config_table[member] as mem on m.member_id = mem.member_id
+                where mem.member_fname like '%$keyword%'
+                or mem.member_lname like '%$keyword%'
+                or st.store_name like '%$keyword%'
+                or play.store_other like '%$keyword%'
+                or play.play_bill like '%$keyword%'
+                or play.play_ready_color like '%$keyword%' ";
 		}
 
 		//echo $qrySel1;
 		$rsSel1 = $DB->Execute($qrySel1);
 		$numrows = $rsSel1->RecordCount();
-		$qrySel2 = $qrySel1 . " order by m.member_id desc" ;
+		$qrySel2 = $qrySel1 . " order by m.report_id desc" ;
 		$rsSel2 = $DB->SelectLimit($qrySel2, $limit, $start);
 		while($row = $rsSel2->FetchRow()){
 		?>
-        <tr valign="top" id="<?php echo $row["member_id"];?>">
-       	  	<td align="center" style="height: 60px;"><input type="checkbox" name="id[]" value="<?php echo $row["member_id"];?>"></td>
-       	  	<td align="left" valign="top" class="row-title" id="<?php echo $row["member_id"];?>">
-                <strong><a title="Edit this item" href="edit.php?id=<?php echo $row["member_id"];?>"><?php echo $row["member_fname"] .' '. $row["member_fname"]; ?></a></strong>
-            <div class="row-actions" id="row-actions-<?php echo $row["member_id"];?>">
-          	<span class="edit"><a title="Edit this item" href="edit.php?id=<?php echo $row["member_id"];?>">Edit</a> | </span>
-          	<span class="view"><a rel="permalink" title="View this item" href="view.php?id=<?php echo $row["member_id"];?>">View</a> | </span>
-          	<span class="delete"><a href="?action=DeleteItem&id=<?php echo $row["member_id"];?>&filter=<?php echo $filter;?>&keyword=<?php echo $keyword;?>" title="Delete this item" class="submitdelete">Delete</a></span>
-          	</div>
-		  	</td>
+            <tr valign="top" id="<?php echo $row["play_id"];?>">
+                <td align="center" style="height: 60px;"><input type="checkbox" name="id[]" value="<?php echo $row["play_id"];?>"></td>
 
-            <td align="left" valign="top"><?php echo $msObj->getName($row["member_province"], $_Config_table["province"], "province_id", "province_name");?></td>
+                <!--  1. สมาชิก -->
+                <td align="left" valign="top" class="row-title" id="<?php echo $row["play_id"];?>">
+                    <strong><a title="Edit this item" href="../member/view.php?id=<?php echo $row["play_id"];?>">
+                        <?php echo $msObj->getFullname($row["member_id"], $_Config_table["member"], "member_id", "member_fname", "member_lname"); ?></a></strong>
+                    <div class="row-actions" id="row-actions-<?php echo $row["play_id"];?>">
+                        <span class="delete"><a href="?action=DeleteItem&id=<?php echo $row["play_id"];?>&filter=<?php echo $filter;?>&keyword=<?php echo $keyword;?>" title="Delete this item" class="submitdelete">Delete</a></span>
+                    </div>
+                </td>
 
-            <td align="left" valign="top"><?php echo (DT::isDate($row["member_create_date"]))? DT::DateTimeShortFormat($row["member_create_date"], 0, 0, "Th") : "-" ;?></td>
-          </tr>
+                <!--  2. เพศ -->
+                <td align="left" valign="top"><?php echo $msObj->getGender($row["member_gender"]);?></td>
+
+                <!--  3. เบอร์ -->
+                <td align="left" valign="top"><?php echo $row["member_mobileno"];?></td>
+
+                <!--  4. สีรสชาติน้ำ -->
+                <td align="left" valign="top"><?php echo $msObj->getReadyColor($row["play_ready_color"]);?></td>
+
+                <!--  5. ร้านค้า -->
+                <td align="left" valign="top">
+                    <?php //เช็ตเงื่อนไขว่าเป็นร้านค้าไหน
+            if($row["store_id"] != '' || $row["store_id"] != 0): //เงือนไขที่ 2 ร้านค้าที่มีในระบบ
+            echo $msObj->getName($row["store_id"], $_Config_table["store"], "store_id", "store_name");
+            else: //เงือนไขที่ 2 ร้านค้าที่ไม่มีในระบบที่สามารถออกใบเสร็จได้
+            echo $row["store_other"];
+            endif;
+                    ?>
+                </td>
+
+                <!--  6. ใบเเสร็จ -->
+                <td align="left" valign="top">
+                    <?php echo $row["play_bill"]; ?>
+                </td>
+
+                <!--  7. วันที่ใบเสร็จ -->
+                <td align="left" valign="top"><?php echo ($DT->isDate($row["createdate"]))? $DT->DateTimeShortFormat($row["createdate"], 0, 0, "Th") : "-" ;?></td>
+            </tr>
           <?php } ?>
         </tbody>
 
@@ -222,22 +270,8 @@
 <script type='text/javascript' src="../../js/jquery_ui/ui/jquery.ui.core.js"></script>
 <script type='text/javascript' src="../../js/jquery_ui/ui/jquery.ui.widget.js"></script>
 <script type='text/javascript' src="../../js/jquery_ui/ui/jquery.ui.accordion.js"></script>
-<script type="text/javascript" src="../../js/fancybox/jquery.fancybox.js"></script>
-
+<script type='text/javascript' src="../../js/jquery_ui/ui/jquery.ui.datepicker.js"></script>
 <script type="text/javascript">
-	jQuery(document).ready(function() {
-		jQuery("a.fancy").fancybox({
-			'transitionIn'		: 'true',
-			'transitionOut'		: 'true',
-			'padding'			: 1,
-			'width'				: 800,
-			'height'				: 800,
-			'scrolling'			: 'auto',
-			'titleShow'  		: false,
-			'hideOnOverlayClick' : false,
-			'type'					: 'iframe'
-		});
-	});
 
 	<?php if($errCode != "0"){?>
 	jQuery("#Show-result").slideDown(500).delay(10000).slideUp(500);
@@ -268,23 +302,25 @@
 		});
 	});
 </script>
-<script type="text/javascript">
-  jQuery(document).ready(function() {
-	//------**********-----//
-	jQuery('#filter').change(function() {
-		jQuery("#group_id")[0].selectedIndex = 0;
-		jQuery("#verify_id")[0].selectedIndex = 0;
-	});
-	//------**********-----//
-	jQuery('#group_id').change(function() {
-		jQuery("#filter")[0].selectedIndex = 0;
-		jQuery("#verify_id")[0].selectedIndex = 0;
-	});
-	//------**********-----//
-	jQuery('#verify_id').change(function() {
-		jQuery("#filter")[0].selectedIndex = 0;
-		jQuery("#group_id")[0].selectedIndex = 0;
-	});
-	//------**********-----//
-  });
+<script>
+    $(function() {
+        $( "#rule_startdate" ).datepicker({
+            defaultDate     : "+1w",
+            dateFormat      : "yy-mm-dd",
+            changeMonth     : true,
+            numberOfMonths  : 1,
+            onClose: function( selectedDate ) {
+                $( "#rule_enddate" ).datepicker( "option", "minDate", selectedDate );
+            }
+        });
+        $( "#rule_enddate" ).datepicker({
+            defaultDate     : "+1w",
+            dateFormat      : "yy-mm-dd",
+            changeMonth     : true,
+            numberOfMonths  : 1,
+            onClose: function( selectedDate ) {
+                $( "#rule_startdate" ).datepicker( "option", "maxDate", selectedDate );
+            }
+        });
+    });
 </script>

@@ -189,7 +189,6 @@ $qrySel2 = $qrySel1 . " order by m.rule_order desc" ;
 <script type='text/javascript' src="../../js/jquery_ui/ui/jquery.ui.widget.js"></script>
 <script type='text/javascript' src="../../js/jquery_ui/ui/jquery.ui.accordion.js"></script>
 <script type='text/javascript' src="../../js/jquery_ui/ui/jquery.ui.datepicker.js"></script>
-<script type="text/javascript" src="../../js/fancybox/jquery.fancybox.js"></script>
 
 <script type="text/javascript">
 

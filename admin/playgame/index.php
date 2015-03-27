@@ -43,7 +43,6 @@ $DT = new DT();
 			case "Delete" :
 				$num = count($id);
 				if ($num >= "1" && $id !="" ){
-					$absPath=$_Config_absolute_path."/uploads/playgame/";
 
 					for( $i = 0; $i < $num; $i++){
 
@@ -53,14 +52,9 @@ $DT = new DT();
 
 						if ($rsSel->RecordCount() > 0){
 							$data = $rsSel->FetchRow();
-							$pic = $data["avatar"];
 							$qryDel = "delete from $_Config_table[playgame] where play_id = '$data[play_id]' ";
 							$DB->Execute($qryDel);
-							if( $DB->Affected_Rows()){
-								@FU::unlinkImage($absPath, $pic);
-							}
 						}
-
 					}
 				}
 
@@ -72,20 +66,13 @@ $DT = new DT();
 			case "DeleteItem" :
 
 				if ($id !="" ){
-					$absPath=$_Config_absolute_path."/uploads/playgame/";
-
 					//Del pic in post
 					$qrySel = "select * from $_Config_table[playgame] Where play_id = '$id' ";
 					$rsSel = $DB->Execute($qrySel);
 
 					if($rsSel->RecordCount() > 0){
 						$data = $rsSel->FetchRow();
-						$pic = $data["avatar"];
 						$qryDel = "delete from $_Config_table[playgame] where play_id = '$data[play_id]' ";
-						$DB->Execute($qryDel);
-						if( $DB->Affected_Rows()){
-							@FU::unlinkImage($absPath, $pic);
-						}
 					}
 				}
 
@@ -176,7 +163,14 @@ $DT = new DT();
 
 
         if( $keyword != '' ){
-            $qrySel1 .= " where m.playgame_fname like '%$keyword%' or m.playgame_lname like '%$keyword%' or m.playgame_mobileno like '%$keyword%' or m.playgame_email like '%$keyword%' ";
+            $qrySel1 .= "
+                left outer join $_Config_table[store] as st on m.store_id = st.store_id
+                left outer join $_Config_table[member] as mem on m.member_id = mem.member_id
+                where m.play_ready_color like '%$keyword%'
+                or mem.member_fname like '%$keyword%'
+                or mem.member_lname like '%$keyword%'
+                or st.store_name like '%$keyword%'
+                or m.store_other like '%$keyword%' ";
 		}
 
 		//echo $qrySel1;
