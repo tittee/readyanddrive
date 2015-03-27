@@ -125,7 +125,7 @@
 <div id="Content">
 <form action="" method="post" id="FormContent" name="FormContent">
     <div class="header">
-        <div class="alignleft_header"><h2>สมาชิก</h2></div>
+        <div class="alignleft_header"><h2>สมาชิก <input name="action2" type="button" class="button-primary" onclick="MM_goToURL('parent','add.php');return document.MM_returnValue" value="เพิ่ม | Add New" /></h2></div>
         <div class="alignright_header"><input type="text" name="keyword" id="keyword" /> <input type="submit" class="button-primary" id="doaction" name="doaction" value="Search">
    	  </div>
     </div>
