@@ -29,7 +29,7 @@
     <h3><a href="#">รายงาน | Report</a></h3>
     <div>
         <ul>
-            <li><a href="<?php echo $_Config_live_site."/admin/report/index.php "?>">จัดการรายงาน</a>
+            <li><a href="<?php echo $_Config_live_site."/admin/playgame/index.php "?>">จัดการรายงาน</a>
             </li>
         </ul>
     </div>

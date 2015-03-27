@@ -24,13 +24,13 @@
 	#Create Obj
 	$DB = mosConnectADODB();
 	$msObj = new MS($DB);
-$DT = new DT();
+
 	$errCode= "0";
 	$flagSuccess = "0";
 
 	$id = trim(mosGetParam( $_FORM, 'id', ''));
 
-$qry="select * from $_Config_table[store] where store_id = '$id' ";
+	$qry="select * from $_Config_table[member] where member_id = '$id' ";
 	$rs = $DB->Execute($qry);
 	$row = $rs->FetchRow();
 
@@ -48,50 +48,53 @@ $qry="select * from $_Config_table[store] where store_id = '$id' ";
 <?php include "../inc/headTag.tmpl.php";?>
 <div id="SideMenu"><?php include "../inc/leftmenu.php";?></div>
 <div id="Content">
-    <h2>รายละเอียดร้าน</h2>
+	<h2>รายละเอียดการลงทะเบียน</h2>
 <div class="updated" id="Show-result"><p><span class="headSm">เกิดข้อผิดพลาด : </span><span class="date"><?php echo "รูปประกอบขนาดเล็ก : ".$errMsg; if($errMsg !="" && $errMsg2 !="" ){ echo ", "; } echo "รูปประกอบขนาดใหญ่ : ".$errMsg2;?></span></p></div>
     <form action="" method="post" enctype="multipart/form-data" name="FromEdit">
-        <table class="form-table">
+    <table class="form-table">
             <tbody>
 
                 <tr class="form-field">
-                    <th align="left" valign="top" scope="row">ชื่อร้าน</th>
-                    <td align="left" valign="top" class="idata"><?php echo $row['store_name']; ?></td>
-                </tr>
-
-
-                <tr class="form-field" >
-                    <th valign="top" scope="row">รูปประกอบขนาดเล็ก</th>
-                    <td class="idata">
-                        <img src="<?php echo "../../uploads/store/".$row["store_primary_img"]; ?>" class="border" /></td>
+                    <th align="left" valign="top" scope="row">ชื่อ</th>
+                    <td align="left" valign="top" class="idata"><?php echo clearText($row["member_fname"]); ?></td>
                 </tr>
                 <tr class="form-field">
-                    <th align="left" valign="top" scope="row">จำนวนรหัสใบเสร็จ</th>
-                    <td align="left" valign="top" class="idata"><?php echo $row['store_bill']; ?></td>
+                    <th align="left" valign="top" scope="row">นามสกุล</th>
+                    <td align="left" valign="top" class="idata"><?php echo clearText($row["member_lname"]); ?></td>
                 </tr>
 
                 <tr class="form-field">
-                    <th align="left" valign="top" scope="row">รายละเอียดใบเสร็จ</th>
+                    <th align="left" valign="top" scope="row">เพศ</th>
                     <td align="left" valign="top" class="idata">
-                        <?php echo $row['store_bill_description']; ?>
+                        <?php echo ($row["member_gender"] == '0')? 'ชาย (Male)' : 'หญิง (Female)' ;?>
                     </td>
+                </tr>
+
+                <tr class="form-field">
+                    <th align="left" valign="top" scope="row">อีเมล์</th>
+                    <td align="left" valign="top" class="idata"><?php echo clearText($row["member_email"]); ?></td>
                 </tr>
                 <tr class="form-field">
-                    <th align="left" valign="top" scope="row">วันที่สร้าง</th>
+                    <th align="left" valign="top" scope="row">โทรศัพท์</th>
+                    <td align="left" valign="top" class="idata"><?=$row["member_mobileno"]?></td>
+                </tr>
+                <tr class="form-field">
+                    <th align="left" valign="top" scope="row">จังหวัด</th>
                     <td align="left" valign="top" class="idata">
-                        <?php echo ($DT->isDate($row["createdate"]))? $DT->DateTimeShortFormat($row["createdate"], 0, 0, "Th") : "-" ;?>
+                        <?php echo $msObj->getName($row["member_province"], $_Config_table["province"], "province_id", "province_name");?>
                     </td>
                 </tr>
 
-                 <tr class="form-field">
-                    <th align="left" valign="top" scope="row">วันที่แก้ไข</th>
+                <tr class="form-field">
+                    <th align="left" valign="top" scope="row">บัญชีอันตราย</th>
                     <td align="left" valign="top" class="idata">
-                        <?php echo ($DT->isDate($row["updatedate"]))? $DT->DateTimeShortFormat($row["updatedate"], 0, 0, "Th") : "-" ;?>
+                        <?php echo ($row["member_province"] == '0')? 'ใช่' : 'ไม่' ;?>
                     </td>
                 </tr>
 
-            </tbody>
-        </table>
+
+          </tbody>
+    </table>
     <p class="submit">
     <input type="button" value="แก้ไข | Edit" name="action" class="button-primary" onclick="MM_goToURL('parent','edit.php?id=<?php echo $id;?>');return document.MM_returnValue">
     <input type="button" name="action2" value="ยกเลิก | Cancel" class="button-primary" onclick="MM_goToURL('parent','index.php');return document.MM_returnValue" /></p>
