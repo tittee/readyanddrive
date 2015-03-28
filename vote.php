@@ -1,3 +1,37 @@
+<?php
+error_reporting(E_ALL);
+ini_set('display_errors','on');
+ob_start("ob_gzhandler"); //เรียกทุกหน้าแล้วตรงนี้เลยปิด
+header("Content-Encoding: gzip");
+header('Content-type: text/html; charset=utf-8');//Header to tell browser what kind of file it is.
+header("Cache-Control: must-revalidate");//Caching
+$offset = 60 * 60;
+$expire = "expires: " . gmdate ("D, d M Y H:i:s", time() + $offset) . " GMT";
+@header($expires);
+define( '_VALID_ACCESS', 1 );
+session_start();
+
+require_once( "configuration.php" );
+require_once( $_Config_absolute_path . "/includes/ms_com.php" );
+require_once( $_Config_absolute_path . "/includes/ms.class.php" );
+require_once( $_Config_absolute_path . "/includes/datetime.class.php" );
+require_once( $_Config_absolute_path . "/includes/func.class.php" );
+
+#Create Obj
+$DB = mosConnectADODB();
+$msObj = new MS($DB);
+
+$FU = new FU(); //Function Class
+$DT = new DT(); //Datetime Class
+
+/* ########## SESSION ##########*/
+if( !isset($_SESSION['SESS_ID'] )){
+    $_SESSION['SESS_ID'] = session_id();
+}
+/* ########## SESSION ##########*/
+
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -8,6 +42,7 @@
 <meta name="viewport" content="width=1300">
 <meta name="robots" content="noindex">
 <!-- css -->
+
 
 <link href="css/animate.css" rel="stylesheet">
 <link href="css/style.css" rel="stylesheet" type="text/css">
@@ -22,6 +57,12 @@
 <script src="js/jquery.imgpreload.min.js"></script>
 
 <script type="text/javascript" src="js/supersized.3.2.7.min.js"></script>
+
+<!-- FancyApp -->
+    <link rel="stylesheet" href="js/fancyapp/jquery.fancybox.css" type="text/css" />
+<script type="text/javascript" src="js/fancyapp/jquery.fancybox.pack.js"></script>
+<script type="text/javascript" src="js/fancyapp/custom.js"></script>
+
 <script type="text/javascript">
 $(function(){
 
@@ -46,6 +87,8 @@ $(function(){
 		});
 
 	});
+
+
 });
 </script>
 
@@ -57,6 +100,7 @@ $(function(){
 	</div>
 </div>
 <div id="wrappermain" class="wrapbg1 bgcover">
+
 	<a href="static.php" class="stat">
 		<img src="images/stat.png" alt="สถิติ">
 	</a>
@@ -66,6 +110,7 @@ $(function(){
 	<?php include"header.php" ?>
 
 	<div class="container topmain">
+        <a href="ajax_like.php" class="fancybox"><span class="hidden"></span>&nbsp;</a>
 		<div class="text-center">
 			<h1 class="title">ลงทะเบียน</h1>
 			<br clear="all">
@@ -73,7 +118,7 @@ $(function(){
 		</div>
 
 		<form class="vote">
-
+        <!-- Ready Color -->
 		<ul class="speedvote clearfix">
 			<li>
 				<div class="speedbg">
@@ -132,11 +177,11 @@ $(function(){
 				</fieldset>
 			</li>
 		</ul>
+        <!-- Ready Color -->
 		<br>
 		<fieldset class="submit text-center">
 			<a href="register.php">ยืนยันสีที่เลือก</a>
 		</fieldset>
-
 		</form>
 
 
@@ -159,18 +204,6 @@ $(function(){
 
 </body>
 </html>
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 

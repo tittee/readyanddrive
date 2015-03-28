@@ -7,7 +7,7 @@
 #
 # Host: localhost (MySQL 5.5.29)
 # Database: readyanddrive
-# Generation Time: 2015-03-27 18:54:33 +0000
+# Generation Time: 2015-03-28 00:20:19 +0000
 # ************************************************************
 
 
@@ -44,8 +44,9 @@ DROP TABLE IF EXISTS `member`;
 
 CREATE TABLE `member` (
   `member_id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `member_fb_id` varchar(100) CHARACTER SET utf8 COLLATE utf8_unicode_ci DEFAULT NULL,
   `member_email` varchar(50) DEFAULT NULL,
-  `member_fname` varchar(20) DEFAULT NULL,
+  `member_fname` varchar(80) CHARACTER SET utf8 COLLATE utf8_unicode_ci DEFAULT NULL,
   `member_lname` varchar(20) DEFAULT NULL,
   `password` varchar(64) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL,
   `member_gender` enum('1','0') DEFAULT '0' COMMENT '0 = male / 1 = female',
@@ -287,6 +288,20 @@ VALUES
 
 /*!40000 ALTER TABLE `store` ENABLE KEYS */;
 UNLOCK TABLES;
+
+
+# Dump of table usercolor
+# ------------------------------------------------------------
+
+DROP TABLE IF EXISTS `usercolor`;
+
+CREATE TABLE `usercolor` (
+  `usercolor_id` int(11) unsigned NOT NULL AUTO_INCREMENT,
+  `sess_id` varchar(120) CHARACTER SET utf8 COLLATE utf8_unicode_ci DEFAULT NULL,
+  `play_ready_color` smallint(5) DEFAULT NULL,
+  PRIMARY KEY (`usercolor_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
 
 
 

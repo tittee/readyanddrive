@@ -4,7 +4,7 @@
 		</h1>
 		<img src="images/textday.png" class="textday">
 		<nav id="mainmenu">
-			<a href="#" class="login">
+            <a href="fb/fbconfig.php" class="login">
 				<img src="images/loginface.png" alt="">
 			</a>
 			<br clear="all">

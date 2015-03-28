@@ -1,8 +1,8 @@
 <?php
 $_Config_absolute_path = dirname(__FILE__);
-//$_Config_live_site = 'http://www.acmebell.com';
-//$_Config_root = 'http://www.acmebell.com';
-//$_Config_redirect_home = 'http://www.acmebell.com/home.php';
+//$_Config_live_site = 'https://www.readyanddrive.com';
+//$_Config_root = 'https://www.readyanddrive.com';
+//$_Config_redirect_home = 'https://www.readyanddrive.com/home.php';
 
 $_Config_redirect_home = 'http://localhost:8080/readyanddrive/index.php';
 $_Config_live_site = 'http://localhost:8080/readyanddrive';
@@ -56,6 +56,9 @@ $_Config_table["store"] = 'store';
 #Province
 $_Config_table["province"] = 'province';
 
+#Usercolor
+$_Config_table["province"] = 'province';
+
 $_EmailContact8WEB_name = "Support "; 	//Define @ [configuration.php]
-$_EmailContact8WEB_from = "support@readyanddrive.org";	//Define @ [configuration.php]
+$_EmailContact8WEB_from = "support@readyanddrive.com";	//Define @ [configuration.php]
 ?>
