@@ -129,6 +129,9 @@
         }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> origin/master
         function sesssionColor( $sess_id ){
             $qry = " select sess_id, play_ready_color from usercolor where sess_id = '$sess_id' ";
             //echo $qry;
@@ -138,8 +141,11 @@
         }
 
 
+<<<<<<< HEAD
 =======
 >>>>>>> Clone In Cipher
+=======
+>>>>>>> origin/master
 		##============= end html selection ===================================
 
 		##============= Get function ===================================

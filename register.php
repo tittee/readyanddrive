@@ -1,4 +1,7 @@
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> origin/master
 <?php
 error_reporting(E_ALL);
 ini_set('display_errors','on');
@@ -44,8 +47,11 @@ if( isset($action) && !empty($action) ){
 }
 
 ?>
+<<<<<<< HEAD
 =======
 >>>>>>> Clone In Cipher
+=======
+>>>>>>> origin/master
 <!DOCTYPE html>
 <html lang="en">
 <head>

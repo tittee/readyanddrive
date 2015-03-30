@@ -5,10 +5,14 @@
 		<img src="images/textday.png" class="textday">
 		<nav id="mainmenu">
 <<<<<<< HEAD
+<<<<<<< HEAD
             <a href="fb/fbconfig.php" class="login">
 =======
 			<a href="#" class="login">
 >>>>>>> Clone In Cipher
+=======
+            <a href="fb/fbconfig.php" class="login">
+>>>>>>> origin/master
 				<img src="images/loginface.png" alt="">
 			</a>
 			<br clear="all">

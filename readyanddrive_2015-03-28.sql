@@ -8,10 +8,14 @@
 # Host: localhost (MySQL 5.5.29)
 # Database: readyanddrive
 <<<<<<< HEAD
+<<<<<<< HEAD
 # Generation Time: 2015-03-28 00:20:19 +0000
 =======
 # Generation Time: 2015-03-27 18:54:33 +0000
 >>>>>>> Clone In Cipher
+=======
+# Generation Time: 2015-03-28 00:20:19 +0000
+>>>>>>> origin/master
 # ************************************************************
 
 
@@ -49,6 +53,7 @@ DROP TABLE IF EXISTS `member`;
 CREATE TABLE `member` (
   `member_id` int(10) unsigned NOT NULL AUTO_INCREMENT,
 <<<<<<< HEAD
+<<<<<<< HEAD
   `member_fb_id` varchar(100) CHARACTER SET utf8 COLLATE utf8_unicode_ci DEFAULT NULL,
   `member_email` varchar(50) DEFAULT NULL,
   `member_fname` varchar(80) CHARACTER SET utf8 COLLATE utf8_unicode_ci DEFAULT NULL,
@@ -56,6 +61,11 @@ CREATE TABLE `member` (
   `member_email` varchar(50) DEFAULT NULL,
   `member_fname` varchar(20) DEFAULT NULL,
 >>>>>>> Clone In Cipher
+=======
+  `member_fb_id` varchar(100) CHARACTER SET utf8 COLLATE utf8_unicode_ci DEFAULT NULL,
+  `member_email` varchar(50) DEFAULT NULL,
+  `member_fname` varchar(80) CHARACTER SET utf8 COLLATE utf8_unicode_ci DEFAULT NULL,
+>>>>>>> origin/master
   `member_lname` varchar(20) DEFAULT NULL,
   `password` varchar(64) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL,
   `member_gender` enum('1','0') DEFAULT '0' COMMENT '0 = male / 1 = female',
@@ -300,6 +310,9 @@ UNLOCK TABLES;
 
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> origin/master
 # Dump of table usercolor
 # ------------------------------------------------------------
 
@@ -314,8 +327,11 @@ CREATE TABLE `usercolor` (
 
 
 
+<<<<<<< HEAD
 =======
 >>>>>>> Clone In Cipher
+=======
+>>>>>>> origin/master
 
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 /*!40101 SET SQL_MODE=@OLD_SQL_MODE */;

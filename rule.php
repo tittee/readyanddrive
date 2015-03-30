@@ -80,10 +80,14 @@ $(function(){
 
 		<figure class="youtubeframe text-center">
 <<<<<<< HEAD
+<<<<<<< HEAD
             <iframe width="854" height="480" src="https://www.youtube.com/embed/4HsPGD_BSFY?rel=0" frameborder="0" allowfullscreen></iframe>
 =======
 			<iframe width="854" height="480" src="https://www.youtube.com/embed/rES4V6TInXs?rel=0" frameborder="0" allowfullscreen></iframe>
 >>>>>>> Clone In Cipher
+=======
+            <iframe width="854" height="480" src="https://www.youtube.com/embed/4HsPGD_BSFY?rel=0" frameborder="0" allowfullscreen></iframe>
+>>>>>>> origin/master
 		</figure>
 
 		<div class="rulebox">

@@ -1,4 +1,7 @@
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> origin/master
 <?php
 error_reporting(E_ALL);
 ini_set('display_errors','on');
@@ -94,8 +97,11 @@ if( isset($action) && !empty($action) ){
 
 
 
+<<<<<<< HEAD
 =======
 >>>>>>> Clone In Cipher
+=======
+>>>>>>> origin/master
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -108,9 +114,13 @@ if( isset($action) && !empty($action) ){
 <!-- css -->
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 
 =======
 >>>>>>> Clone In Cipher
+=======
+
+>>>>>>> origin/master
 <link href="css/animate.css" rel="stylesheet">
 <link href="css/style.css" rel="stylesheet" type="text/css">
 <link rel="stylesheet" href="css/supersized.css" type="text/css" media="screen" />
@@ -125,14 +135,20 @@ if( isset($action) && !empty($action) ){
 
 <script type="text/javascript" src="js/supersized.3.2.7.min.js"></script>
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> origin/master
     <script type="text/javascript" src="js/countdown/jquery.countdown.min.js"></script>
 <!-- FancyApp -->
     <link rel="stylesheet" href="js/fancyapp/jquery.fancybox.css"  />
 <script type="text/javascript" src="js/fancyapp/jquery.fancybox.pack.js"></script>
 <script type="text/javascript" src="js/fancyapp/custom.js"></script>
 
+<<<<<<< HEAD
 =======
 >>>>>>> Clone In Cipher
+=======
+>>>>>>> origin/master
 <script type="text/javascript">
 $(function(){
 
@@ -158,10 +174,15 @@ $(function(){
 
 	});
 <<<<<<< HEAD
+<<<<<<< HEAD
 
 
 =======
 >>>>>>> Clone In Cipher
+=======
+
+
+>>>>>>> origin/master
 });
 </script>
 
@@ -174,9 +195,13 @@ $(function(){
 </div>
 <div id="wrappermain" class="wrapbg1 bgcover">
 <<<<<<< HEAD
+<<<<<<< HEAD
 
 =======
 >>>>>>> Clone In Cipher
+=======
+
+>>>>>>> origin/master
 	<a href="static.php" class="stat">
 		<img src="images/stat.png" alt="สถิติ">
 	</a>
@@ -187,9 +212,13 @@ $(function(){
 
 	<div class="container topmain">
 <<<<<<< HEAD
+<<<<<<< HEAD
         <a href="ajax_like.php" class="fancybox"><span class="hidden"></span>&nbsp;</a>
 =======
 >>>>>>> Clone In Cipher
+=======
+        <a href="ajax_like.php" class="fancybox"><span class="hidden"></span>&nbsp;</a>
+>>>>>>> origin/master
 		<div class="text-center">
 			<h1 class="title">ลงทะเบียน</h1>
 			<br clear="all">
@@ -197,12 +226,17 @@ $(function(){
 		</div>
 
 <<<<<<< HEAD
+<<<<<<< HEAD
         <form class="vote" action="" method="post" id="frm_ready_color" onSubmit=" return checkForm(); ">
         <!-- Ready Color -->
 =======
 		<form class="vote">
 
 >>>>>>> Clone In Cipher
+=======
+        <form class="vote" action="" method="post" id="frm_ready_color" onSubmit=" return checkForm(); ">
+        <!-- Ready Color -->
+>>>>>>> origin/master
 		<ul class="speedvote clearfix">
 			<li>
 				<div class="speedbg">
@@ -212,10 +246,14 @@ $(function(){
 				<label for="votegreen"><img src="images/readygreen_vote.png" class="imgvote"></label>
 				<fieldset class="bggreen">
 <<<<<<< HEAD
+<<<<<<< HEAD
                     <input type="radio" name="vote" id="votegreen" class="vote" value="1" <?php echo ($sel_color['play_ready_color'] == '1')? "checked" : ""; ?> >
 =======
 					<input type="radio" name="vote" id="votegreen">
 >>>>>>> Clone In Cipher
+=======
+                    <input type="radio" name="vote" id="votegreen" class="vote" value="1" <?php echo ($sel_color['play_ready_color'] == '1')? "checked" : ""; ?> >
+>>>>>>> origin/master
 					<label for="votegreen">Ready Plus</label>
 				</fieldset>
 
@@ -228,10 +266,14 @@ $(function(){
 				<label for="voteblue"><img src="images/readyblue_vote.png" class="imgvote"></label>
 				<fieldset class="bgblue">
 <<<<<<< HEAD
+<<<<<<< HEAD
                     <input type="radio" name="vote" id="voteblue" class="vote" value="2"  <?php echo ($sel_color['play_ready_color'] == '2')? "checked" : ""; ?> >
 =======
 					<input type="radio" name="vote" id="voteblue">
 >>>>>>> Clone In Cipher
+=======
+                    <input type="radio" name="vote" id="voteblue" class="vote" value="2"  <?php echo ($sel_color['play_ready_color'] == '2')? "checked" : ""; ?> >
+>>>>>>> origin/master
 					<label for="voteblue">Ready Plus</label>
 				</fieldset>
 			</li>
@@ -241,6 +283,7 @@ $(function(){
 					<span class="resultvote">800000</span>
 				</div>
 <<<<<<< HEAD
+<<<<<<< HEAD
                 <label for="votered"><img src="images/readyred_vote.png" class="imgvote"  <?php echo ($sel_color['play_ready_color'] == '3')? "checked" : ""; ?> ></label>
 				<fieldset class="bgred">
                     <input type="radio" name="vote" class="vote" id="votered" value="3" >
@@ -249,6 +292,11 @@ $(function(){
 				<fieldset class="bgred">
 					<input type="radio" name="vote" id="votered">
 >>>>>>> Clone In Cipher
+=======
+                <label for="votered"><img src="images/readyred_vote.png" class="imgvote"  <?php echo ($sel_color['play_ready_color'] == '3')? "checked" : ""; ?> ></label>
+				<fieldset class="bgred">
+                    <input type="radio" name="vote" class="vote" id="votered" value="3" >
+>>>>>>> origin/master
 					<label for="votered">Ready Plus</label>
 				</fieldset>
 			</li>
@@ -260,10 +308,14 @@ $(function(){
 				<label for="voteyellow"><img src="images/readyyellow_vote.png" class="imgvote"></label>
 				<fieldset class="bgyellow">
 <<<<<<< HEAD
+<<<<<<< HEAD
                     <input type="radio" name="vote" class="vote" id="voteyellow" value="4" <?php echo ($sel_color['play_ready_color'] == '4')? "checked" : ""; ?>>
 =======
 					<input type="radio" name="vote" id="voteyellow">
 >>>>>>> Clone In Cipher
+=======
+                    <input type="radio" name="vote" class="vote" id="voteyellow" value="4" <?php echo ($sel_color['play_ready_color'] == '4')? "checked" : ""; ?>>
+>>>>>>> origin/master
 					<label for="voteyellow">Ready Plus</label>
 				</fieldset>
 			</li>
@@ -275,15 +327,22 @@ $(function(){
 				<label for="votepurple"><img src="images/readypurple_vote.png" class="imgvote"></label>
 				<fieldset class="bgpurple">
 <<<<<<< HEAD
+<<<<<<< HEAD
                     <input type="radio" name="vote" class="vote" id="votepurple" value="5" <?php echo ($sel_color['play_ready_color'] == '5')? "checked" : ""; ?>>
 =======
 					<input type="radio" name="vote" id="votepurple">
 >>>>>>> Clone In Cipher
+=======
+                    <input type="radio" name="vote" class="vote" id="votepurple" value="5" <?php echo ($sel_color['play_ready_color'] == '5')? "checked" : ""; ?>>
+>>>>>>> origin/master
 					<label for="votepurple">Ready Plus</label>
 				</fieldset>
 			</li>
 		</ul>
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> origin/master
         <!-- Ready Color -->
 		<br>
 		<fieldset class="submit text-center">
@@ -291,6 +350,7 @@ $(function(){
 			<!--<a href="register.php">ยืนยันสีที่เลือก</a>-->
 		</fieldset>
 		</form>
+<<<<<<< HEAD
 =======
 		<br>
 		<fieldset class="submit text-center">
@@ -301,6 +361,8 @@ $(function(){
 
 
 >>>>>>> Clone In Cipher
+=======
+>>>>>>> origin/master
 	</div>
 
 	<footer>
@@ -318,6 +380,9 @@ $(function(){
 
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> origin/master
     <script type="text/javascript">
 	function checkForm(){
         if( $(".vote").is(":checked") == false ) {
@@ -328,6 +393,7 @@ $(function(){
             return true;
         }
     }
+<<<<<<< HEAD
 =======
 
 </body>
@@ -335,23 +401,31 @@ $(function(){
 
 
 
+=======
+>>>>>>> origin/master
 
 
 
 
+<<<<<<< HEAD
 >>>>>>> Clone In Cipher
 
 
 
 
 <<<<<<< HEAD
+=======
+>>>>>>> origin/master
 </script>
 
 </body>
 </html>
+<<<<<<< HEAD
 =======
 
 >>>>>>> Clone In Cipher
+=======
+>>>>>>> origin/master
 
 
 
