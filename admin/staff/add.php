@@ -75,7 +75,7 @@
     <table class="form-table">
             <tbody><tr class="form-field form-required">
                 <th align="left" valign="top" scope="row"><label for="title">ชื่อผู้ใช้งาน</label></th>
-              <td align="left" valign="top" class="idata"><input type="text" aria-required="true" size="40" id="name" name="name" value="<?php echo clearText($name); ?>"></td>
+              <td align="left" valign="top" class="idata"><input type="text" aria-required="true" size="40" id="name" name="name" value="<?php echo $name; ?>"></td>
             </tr>
             <tr class="form-field">
                 <th align="left" valign="top" scope="row"><label for="abstract">ชื่อในการเข้าสู่ระบบ</label></th>
@@ -87,7 +87,7 @@
             </tr>
             <tr class="form-field">
               <th align="left" valign="top" scope="row">อีเมล์</th>
-              <td align="left" valign="top" class="idata"><input name="email" type="text"  id="email" value="<?php echo clearText($email); ?>" size="40" /></td>
+              <td align="left" valign="top" class="idata"><input name="email" type="text"  id="email" value="<?php echo $email; ?>" size="40" /></td>
             </tr>
             <tr class="form-field">
               <th align="left" valign="top" scope="row">ระดับการเข้าถึง</th>

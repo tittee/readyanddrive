@@ -82,17 +82,17 @@
           </tr>
           <tr class="form-field">
             <th align="left" valign="top" scope="row"><label for="abstract">ชื่อในการเข้าสู่ระบบ</label></th>
-            <td align="left" valign="top" class="idata"><input name="username" type="text" id="username" size="40" disabled="disabled" value="<?php echo clearText($row["username"]); ?>"/></td>
+            <td align="left" valign="top" class="idata"><input name="username" type="text" id="username" size="40" disabled="disabled" value="<?php echo $row["username"]; ?>"/></td>
           </tr>
           <tr class="form-field">
             <th align="left" valign="top" scope="row">รหัสลับ</th>
-            <td align="left" valign="top" class="idata"><input name="password" type="password" id="password" size="40" value="<?php echo clearText($row["password"]); ?>"/>
+            <td align="left" valign="top" class="idata"><input name="password" type="password" id="password" size="40" value="<?php echo $row["password"]; ?>"/>
               <input name="chk_password" type="checkbox" id="chk_password" value="on" />
             Change password</td>
           </tr>
           <tr class="form-field">
             <th align="left" valign="top" scope="row">อีเมล์</th>
-            <td align="left" valign="top" class="idata"><input name="email" type="text"  id="email" value="<?php echo clearText($row["email"]); ?>" size="40" /></td>
+            <td align="left" valign="top" class="idata"><input name="email" type="text"  id="email" value="<?php echo $row["email"]; ?>" size="40" /></td>
           </tr>
           <tr class="form-field">
             <th align="left" valign="top" scope="row">ระดับการเข้าถึง</th>

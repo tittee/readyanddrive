@@ -24,6 +24,7 @@
 	#Create Obj
 	$DB = mosConnectADODB();
 	$msObj = new MS($DB);
+    $DT = new DT();
 
 	$errCode="0";
 
@@ -191,7 +192,7 @@
 				}
 			?></td>
 
-       	  <td align="left" valign="top"><?php echo (DT::isDate($row["CreateDate"]))? DT::DateTimeShortFormat($row["CreateDate"], 0, 0, "Th") : "-" ;?><br />
+            <td align="left" valign="top"><?php echo ($DT->isDate($row["CreateDate"]))? $DT->DateTimeShortFormat($row["CreateDate"], 0, 0, "Th") : "-" ;?><br />
           <?php echo ($row["status"]=="1")? "<span class=\"headGreen\">เปิดการใช้งาน</span>" : "<span class=\"headSm\">ปิดการใช้งาน</span>"; ?>
           </td>
           </tr>

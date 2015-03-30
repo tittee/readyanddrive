@@ -22,6 +22,7 @@
 <script src="js/jquery.imgpreload.min.js"></script>
 
 <script type="text/javascript" src="js/supersized.3.2.7.min.js"></script>
+<script src="js/jquery.lightbox_me.js"></script>
 <script type="text/javascript">
 $(function(){
 
@@ -29,19 +30,40 @@ $(function(){
 	// TweenMax.set("#bglogo",{y:-404,alpha:0})
 	// TweenMax.set("#gotobegining", {scale:0.5,alpha:0,rotation:60});
 	// TweenMax.set(".contentpage", {scale:0.5,alpha:0});
+	var govote=$("#govote").attr("href");
 
+	$('#popuprule').click(function() {
+      $('#popupR').lightbox_me({
+        centered: true,
+        onLoad: function() {
+			$("#govote").removeAttr('href');
+			$('#checkrule').change(function() {
+		        if($(this).is(":checked")) {
+		           $("#govote").attr("href",govote);
+		        }
+		       	else{
+		       	   $("#govote").removeAttr('href');
+		       	}
+		    });
+
+			}
+		});
+      	return false;
+    });
 	$('body').addClass('hidden');
 	$("#wrap-loading").show();
 	$("body img").imgpreload(function(){
 		$("#wrap-loading").fadeOut(function(){
 			$('body').removeClass('hidden');
-			// $.supersized({
 
-			// 				// Thumbnail navigation
-			// 		slides: [			// Slideshow Images
-			// 			{image : 'images/bgIT.jpg'}
-			// 		],
-			// 	});
+			var activem = $('#mainmenu li.active');
+			$('#mainmenu li:not(.active)').hover( function() {
+				$(activem).removeClass('active');
+			},
+			function() {
+				$(activem).addClass('active');
+			});
+
 
 		});
 
@@ -51,6 +73,7 @@ $(function(){
 
 </head>
 <body>
+<?php include"popuprule.php" ?>
 <div id="wrap-loading">
 	<div class="loading">
 		<span>Loading</span>

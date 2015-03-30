@@ -26,6 +26,14 @@
         </ul>
     </div>
 
+    <h3><a href="#">การเล่นเกมส์ | Play</a></h3>
+    <div>
+        <ul>
+            <li><a href="<?php echo $_Config_live_site."/admin/playgame/index.php "?>">จัดการการเล่นเกมส์</a>
+            </li>
+        </ul>
+    </div>
+
     <h3><a href="#">รายงาน | Report</a></h3>
     <div>
         <ul>

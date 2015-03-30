@@ -10,7 +10,7 @@
 			<br clear="all">
 			<ul>
 				<li  class="active"><a href="index.php">หน้าแรก</a></li>
-				<li><a href="vote.php" class="regis">ลงทะเบียน</a></li>
+				<li><a href="#" id="popuprule" class="regis">ลงทะเบียน</a></li>
 				<li><a href="reward.php" class="award">ของรางวัล</a></li>
 				<li><a href="rule.php" class="rule">กฏกติกา</a></li>
 				<li><a href="winner.php" class="annou">ประกาศผล</a></li>
