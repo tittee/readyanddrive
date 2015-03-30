@@ -55,8 +55,8 @@
         try {
 
             $DB = NewADOConnection("mysql");
-            //$DB->Connect("localhost", "root", "112233", "readyanddrive");
-            $DB->Connect('localhost', 'readyand_tee', 'uv7O$_pJh5.k', 'readyand_db');
+            $DB->Connect("localhost", "root", "112233", "readyanddrive");
+            //$DB->Connect('localhost', 'readyand_tee', 'uv7O$_pJh5.k', 'readyand_db');
 
         } catch (exception $e) {
             //var_dump($e);

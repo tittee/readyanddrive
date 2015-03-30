@@ -57,7 +57,7 @@ $_Config_table["store"] = 'store';
 $_Config_table["province"] = 'province';
 
 #Usercolor
-$_Config_table["province"] = 'province';
+$_Config_table["usercolor"] = 'usercolor';
 
 $_EmailContact8WEB_name = "Support "; 	//Define @ [configuration.php]
 $_EmailContact8WEB_from = "support@readyanddrive.com";	//Define @ [configuration.php]

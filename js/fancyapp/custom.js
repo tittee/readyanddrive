@@ -7,6 +7,13 @@ $(document).ready(function() {
         height      : '100%',
         type        : 'ajax',
         closeBtn    : false,
+        closeClick  : false,
+
+        helpers : {
+            overlay : {
+                closeClick: false
+            } // prevents closing when clicking OUTSIDE fancybox
+        }
     });
 
 	$("#fancybox-manual-b").click(function() {

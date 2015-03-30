@@ -17,6 +17,8 @@ require_once( $_Config_absolute_path . "/includes/ms.class.php" );
 require_once( $_Config_absolute_path . "/includes/datetime.class.php" );
 require_once( $_Config_absolute_path . "/includes/func.class.php" );
 
+
+//echo $_SESSION['FBLIKED'];
 #Create Obj
 $DB = mosConnectADODB();
 $msObj = new MS($DB);
@@ -30,7 +32,66 @@ if( !isset($_SESSION['SESS_ID'] )){
 }
 /* ########## SESSION ##########*/
 
+$sel_color = $msObj->sesssionColor($_SESSION['SESS_ID']);
+
+
+//echo $sel_color['play_ready_color'];
+$action = trim(mosGetParam( $_FORM, 'action', ''));
+
+if( isset($action) && !empty($action) ){
+    #Detail
+    $vote = trim(mosGetParam($_FORM,'vote'));
+
+    if ( $sel_color['sess_id'] == $_SESSION['SESS_ID'] ){
+
+        /* Update */
+        echo $sqlUpdate = " update $_Config_table[usercolor] set
+            play_ready_color = $DB->qstr('$vote')
+            where sess_id = '$sel_color[sess_id]' ";
+
+        $acceptTran = $DB->Execute($sqlUpdate);  //ไม่ต้อง insert เพราะเราทำเงื่อนไข ขึั้นต่อไป
+        //if ($acceptTran) $acceptTran = $DB->Execute($qryInsPD);
+        if (!$acceptTran) {
+            $DB->RollbackTrans();
+            echo "Error Save [".$sqlUpdate."]";
+        } else{
+            $flagCommit1 = $DB->CommitTrans();
+        }
+
+        $flagSuccess1 = $flagCommit1; //เปลี่ยนเป็น $flagCommit
+        if( $flagSuccess1 == "1" ){
+            mosRedirect("register.php");
+        }
+    }else{
+
+        /* Insert */
+        echo $sqlIns = " INSERT INTO $_Config_table[usercolor]
+        ( sess_id, play_ready_color ) values ( '$_SESSION[SESS_ID]', $DB->qstr('$vote') ) ";
+        /* อันนี้ */
+        $acceptTran = $DB->Execute($sqlIns);  //ไม่ต้อง insert เพราะเราทำเงื่อนไข ขึั้นต่อไป
+        //if ($acceptTran) $acceptTran = $DB->Execute($qryInsPD);
+        if (!$acceptTran) {
+            $DB->RollbackTrans();
+            echo "Error Save [".$sqlIns."]";
+        } else{
+            $flagCommit1 = $DB->CommitTrans();
+        }
+
+        $flagSuccess1 = $flagCommit1; //เปลี่ยนเป็น $flagCommit
+        if( $flagSuccess1 == "1" ){
+            mosRedirect("register.php");
+        }
+    }
+
+
+
+}
+
+
 ?>
+
+
+
 
 <!DOCTYPE html>
 <html lang="en">
@@ -57,9 +118,9 @@ if( !isset($_SESSION['SESS_ID'] )){
 <script src="js/jquery.imgpreload.min.js"></script>
 
 <script type="text/javascript" src="js/supersized.3.2.7.min.js"></script>
-
+    <script type="text/javascript" src="js/countdown/jquery.countdown.min.js"></script>
 <!-- FancyApp -->
-    <link rel="stylesheet" href="js/fancyapp/jquery.fancybox.css" type="text/css" />
+    <link rel="stylesheet" href="js/fancyapp/jquery.fancybox.css"  />
 <script type="text/javascript" src="js/fancyapp/jquery.fancybox.pack.js"></script>
 <script type="text/javascript" src="js/fancyapp/custom.js"></script>
 
@@ -117,7 +178,7 @@ $(function(){
 			<h2 class="textvote">ซื้อสีไหน เลือกสีนั้น</h2>
 		</div>
 
-		<form class="vote">
+        <form class="vote" action="" method="post" id="frm_ready_color" onSubmit=" return checkForm(); ">
         <!-- Ready Color -->
 		<ul class="speedvote clearfix">
 			<li>
@@ -127,7 +188,7 @@ $(function(){
 				</div>
 				<label for="votegreen"><img src="images/readygreen_vote.png" class="imgvote"></label>
 				<fieldset class="bggreen">
-					<input type="radio" name="vote" id="votegreen">
+                    <input type="radio" name="vote" id="votegreen" class="vote" value="1" <?php echo ($sel_color['play_ready_color'] == '1')? "checked" : ""; ?> >
 					<label for="votegreen">Ready Plus</label>
 				</fieldset>
 
@@ -139,7 +200,7 @@ $(function(){
 				</div>
 				<label for="voteblue"><img src="images/readyblue_vote.png" class="imgvote"></label>
 				<fieldset class="bgblue">
-					<input type="radio" name="vote" id="voteblue">
+                    <input type="radio" name="vote" id="voteblue" class="vote" value="2"  <?php echo ($sel_color['play_ready_color'] == '2')? "checked" : ""; ?> >
 					<label for="voteblue">Ready Plus</label>
 				</fieldset>
 			</li>
@@ -148,9 +209,9 @@ $(function(){
 					<span class="valuevote">50%</span>
 					<span class="resultvote">800000</span>
 				</div>
-				<label for="votered"><img src="images/readyred_vote.png" class="imgvote"></label>
+                <label for="votered"><img src="images/readyred_vote.png" class="imgvote"  <?php echo ($sel_color['play_ready_color'] == '3')? "checked" : ""; ?> ></label>
 				<fieldset class="bgred">
-					<input type="radio" name="vote" id="votered">
+                    <input type="radio" name="vote" class="vote" id="votered" value="3" >
 					<label for="votered">Ready Plus</label>
 				</fieldset>
 			</li>
@@ -161,7 +222,7 @@ $(function(){
 				</div>
 				<label for="voteyellow"><img src="images/readyyellow_vote.png" class="imgvote"></label>
 				<fieldset class="bgyellow">
-					<input type="radio" name="vote" id="voteyellow">
+                    <input type="radio" name="vote" class="vote" id="voteyellow" value="4" <?php echo ($sel_color['play_ready_color'] == '4')? "checked" : ""; ?>>
 					<label for="voteyellow">Ready Plus</label>
 				</fieldset>
 			</li>
@@ -172,7 +233,7 @@ $(function(){
 				</div>
 				<label for="votepurple"><img src="images/readypurple_vote.png" class="imgvote"></label>
 				<fieldset class="bgpurple">
-					<input type="radio" name="vote" id="votepurple">
+                    <input type="radio" name="vote" class="vote" id="votepurple" value="5" <?php echo ($sel_color['play_ready_color'] == '5')? "checked" : ""; ?>>
 					<label for="votepurple">Ready Plus</label>
 				</fieldset>
 			</li>
@@ -180,11 +241,10 @@ $(function(){
         <!-- Ready Color -->
 		<br>
 		<fieldset class="submit text-center">
-			<a href="register.php">ยืนยันสีที่เลือก</a>
+            <input type="submit" value="ยืนยันสีที่เลือก" name="action">
+			<!--<a href="register.php">ยืนยันสีที่เลือก</a>-->
 		</fieldset>
 		</form>
-
-
 	</div>
 
 	<footer>
@@ -201,6 +261,21 @@ $(function(){
 </div>
 
 
+    <script type="text/javascript">
+	function checkForm(){
+        if( $(".vote").is(":checked") == false ) {
+              alert("กรุณาระบุรสชาติ");
+              return false;
+        }else{
+
+            return true;
+        }
+    }
+
+
+
+
+</script>
 
 </body>
 </html>

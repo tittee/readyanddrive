@@ -128,6 +128,15 @@
             endswitch;
         }
 
+        function sesssionColor( $sess_id ){
+            $qry = " select sess_id, play_ready_color from usercolor where sess_id = '$sess_id' ";
+            //echo $qry;
+            $rs = $this->_db->Execute($qry);
+            $result = $rs->FetchRow();
+            return $result;
+        }
+
+
 		##============= end html selection ===================================
 
 		##============= Get function ===================================
@@ -510,7 +519,7 @@
 
 		function getUser($member_id){//ดึงค่าหลักประจำเว็บ เช่น รูป bg,รูป header , keyword ต่างๆ
 
-			$qry = "select member_id, username from member where member_id = '$member_id'";
+			$qry = "select * from member where member_id = '$member_id'";
 			echo $qry;
 			$rs = $this->_db->Execute($qry);
 			$result = $rs->FetchRow();

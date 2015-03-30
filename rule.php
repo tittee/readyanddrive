@@ -79,7 +79,7 @@ $(function(){
 		</div>
 
 		<figure class="youtubeframe text-center">
-			<iframe width="854" height="480" src="https://www.youtube.com/embed/rES4V6TInXs?rel=0" frameborder="0" allowfullscreen></iframe>
+            <iframe width="854" height="480" src="https://www.youtube.com/embed/4HsPGD_BSFY?rel=0" frameborder="0" allowfullscreen></iframe>
 		</figure>
 
 		<div class="rulebox">

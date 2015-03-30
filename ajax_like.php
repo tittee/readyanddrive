@@ -24,6 +24,7 @@
 <script src="js/jquery.imgpreload.min.js"></script>
 
 <script type="text/javascript" src="js/supersized.3.2.7.min.js"></script>
+<script type="text/javascript" src="js/countdown/jquery.countdown.min.js"></script>
 <script type="text/javascript">
 $(function(){
 
@@ -77,6 +78,7 @@ $(function(){
 
 });
 </script>
+
 <style>
 	h1{margin-top: 20px;}
 	.fb-like-box{background: #fff;}
@@ -91,14 +93,13 @@ $(function(){
   fjs.parentNode.insertBefore(js, fjs);
 }(document, 'script', 'facebook-jssdk'));</script>-->
 
-        <script>(function(d, s, id) {
+    <script>(function(d, s, id) {
     var js, fjs = d.getElementsByTagName(s)[0];
     if (d.getElementById(id)) return;
     js = d.createElement(s); js.id = id;
     js.src = "//connect.facebook.net/en_GB/sdk.js#xfbml=1&appId=255129337996871&version=v2.3";
     fjs.parentNode.insertBefore(js, fjs);
 }(document, 'script', 'facebook-jssdk'));</script>
-
 </head>
 <body>
 
@@ -106,13 +107,52 @@ $(function(){
 	<!-- bg -->
 
 
-    <div class=" text-center" style="width: 300px; min-height: 200px; ">
+    <div class=" text-center" style="width: 400px; min-height: 200px; ">
+        <div id="countdown"></div>
 		<!--<div class="fb-like-box" data-href="https://www.facebook.com/readyenergy?fref=ts" data-colorscheme="light" data-show-faces="true" data-header="true" data-stream="false" data-show-border="true"></div>-->
-        <div class="fb-page" data-href="https://www.facebook.com/pages/%E0%B9%84%E0%B8%AE%E0%B9%84%E0%B8%A5%E0%B8%97%E0%B9%8C%E0%B9%80%E0%B8%94%E0%B8%AD%E0%B8%B0%E0%B8%A7%E0%B8%AD%E0%B8%A2%E0%B8%AA%E0%B9%8C%E0%B9%84%E0%B8%97%E0%B8%A2%E0%B9%81%E0%B8%A5%E0%B8%99%E0%B8%94%E0%B9%8C/1553306518221089" data-hide-cover="false" data-show-facepile="true" data-show-posts="false"></div>
+        <div class="fb-page" data-href="https://www.facebook.com/118926511456194" data-width="400" data-height="400" data-hide-cover="false" data-show-facepile="true" data-show-posts="false"></div>
+        <!--<div class="fb-page" data-href="https://www.facebook.com/pages/%E0%B9%84%E0%B8%AE%E0%B9%84%E0%B8%A5%E0%B8%97%E0%B9%8C%E0%B9%80%E0%B8%94%E0%B8%AD%E0%B8%B0%E0%B8%A7%E0%B8%AD%E0%B8%A2%E0%B8%AA%E0%B9%8C%E0%B9%84%E0%B8%97%E0%B8%A2%E0%B9%81%E0%B8%A5%E0%B8%99%E0%B8%94%E0%B9%8C/1553306518221089?fref=ts" data-hide-cover="false" data-show-facepile="true" data-show-posts="false"></div>-->
 	</div>
 
 </div>
 
+    <script type="text/javascript">
+        jQuery(document).ready(function() {
+            jQuery('.fb-page').on('click', function() {
+                $.fancybox.close( true );
+                alert('sssssss');
+            });
+
+        });
+    </script>
+    <script type="text/javascript">
+        var fullDate = new Date();
+        var twoDigitMonth = fullDate.getMonth()+"";if(twoDigitMonth.length==1)  twoDigitMonth="0" +twoDigitMonth;
+        var twoDigitDate = fullDate.getDate()+"";if(twoDigitDate.length==1) twoDigitDate="0" +twoDigitDate;
+        var currentDate = twoDigitDate + "/" + twoDigitMonth + "/" + fullDate.getFullYear();
+
+        /*console.log(currentDate);
+        $('#countdown').countdown('2020/10/10 00:00:59', function(event) {
+            $(this).html(event.strftime('จะปิดหน้าต่างภายใน %S'));
+        });*/
+        //$('#countdown').countdown({startTime: "00:00:60"});
+
+        var count=60;
+
+        var counter=setInterval(timer, 1000); //1000 will  run it every 1 second
+
+        function timer()
+        {
+            count=count-1;
+            if (count <= 0)
+            {
+                clearInterval(counter);
+                return;
+            }
+
+            document.getElementById("countdown").innerHTML= "จะปิดหน้าต่างภายใน " + count + " วินาที"; // watch for spelling
+        }
+    </script>
 
 </body>
 </html>
